@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title>Cẩm Nang Liên Quân</title>
+  <link rel="stylesheet" href="shared/css/jquery.mobile-1.4.5.min.css">
+  <link rel="stylesheet" href="shared/css/slick.css">
+  <link rel="stylesheet" href="shared/css/main.css">
+  <script type="text/javascript" src="shared/js/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="shared/js/jquery.mobile-1.4.5.min.js"></script>
+  <script type="text/javascript" src="shared/js/slick.min.js"></script>
+  <script type="text/javascript" src="shared/js/main.js"></script>
+    <style>
+  .test > div {
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+    float: left;
+    border: 2px solid blue;
+  }
+  .blue {
+    background: blue;
+  }
+  </style>
+</head>
+<body>
+
+  <!-- Start of first page: #main -->
+  <div data-role="page" id="main">
+    <div data-role="header">
+      <h1>Questions</h1>
+    </div><!-- /header -->
+    <div role="main" class="ui-content">
+      Content
+      <a href="#page1">Qua page 1</a>
+      <a href="#" class="clickMe">Click Me</a>
+      <div class="test">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+      </div>
+    </div><!-- /content -->
+  </div><!-- /page main -->
+
+  <!-- Start of first page: #main -->
+  <div data-role="page" id="page1">
+    <div data-role="header">
+      <h1>Page1</h1>
+    </div><!-- /header -->
+    <div role="main" class="ui-content">
+      Content page 1
+      <a href="#main">Vê Main</a>
+    </div><!-- /content -->
+  </div><!-- /page main -->
+
+  <!-- <script type="text/javascript" src="cordova.js"></script> -->
+</body>
+</html>
