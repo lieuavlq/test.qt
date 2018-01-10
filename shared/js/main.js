@@ -1,6 +1,6 @@
 $('document').ready(function(){
   var body = $('body');
-  var qtimg, qttime, qtname, qtleft, qtright, pathImg, imgJpg;
+  var qtimg, qttime, qtname, qtleft, qtright, pathImg, imgJpg, progDelay;
   qtimg = $('.qtimg');
   qttime = $('.qttime');
   qtname = $('.qtname');
@@ -8,20 +8,23 @@ $('document').ready(function(){
   qtright = $('.qtright');
   pathImg = 'shared/img/question/';
   imgJpg = '.jpg';
-  var success = 'shared/img/common/success.gif';
-  var failed = 'shared/img/common/failed.gif';
+  var gameSuccess = 'shared/img/common/success.gif';
+  var gameFailed = 'shared/img/common/failed.gif';
   var gameStart = 'shared/img/common/start.gif';
+  var gameTimeup = 'shared/img/common/timeup.gif';
+  var totalTime = 3; //time for progress bar
+  var randomMax = 8; //maximum show question
 
-  var arr1 = [
-    {img: "testquestion1", name: "Ai đây1?", left: "Zuka1", right: "Wukong1", anleft: 0, anright: 1},
+  var quesStack = [
+    {img: "testquestion1", name: "Ai đây1?", left: "Zuka1", right: "Wukong1", anleft: 1, anright: 0},
     {img: "testquestion2", name: "Ai đây2?", left: "Zuka2", right: "Wukong2", anleft: 1, anright: 0},
     {img: "testquestion3", name: "Ai đây3?", left: "Zuka3", right: "Wukong3", anleft: 1, anright: 0},
-    {img: "testquestion4", name: "Ai đây4?", left: "Zuka4", right: "Wukong4", anleft: 0, anright: 1},
-    {img: "testquestion5", name: "Ai đây5?", left: "Zuka5", right: "Wukong5", anleft: 0, anright: 1},
+    {img: "testquestion4", name: "Ai đây4?", left: "Zuka4", right: "Wukong4", anleft: 1, anright: 0},
+    {img: "testquestion5", name: "Ai đây5?", left: "Zuka5", right: "Wukong5", anleft: 1, anright: 0},
     {img: "testquestion6", name: "Ai đây6?", left: "Zuka6", right: "Wukong6", anleft: 1, anright: 0},
     {img: "testquestion7", name: "Ai đây7?", left: "Zuka7", right: "Wukong7", anleft: 1, anright: 0},
     {img: "testquestion8", name: "Ai đây8?", left: "Zuka8", right: "Wukong8", anleft: 1, anright: 0},
-    {img: "testquestion9", name: "Ai đây9?", left: "Zuka9", right: "Wukong9", anleft: 0, anright: 1}
+    {img: "testquestion9", name: "Ai đây9?", left: "Zuka9", right: "Wukong9", anleft: 1, anright: 0}
   ]
 
   randomGenerator.prototype = {
@@ -40,64 +43,60 @@ $('document').ready(function(){
       this.remaining.splice(index, 1);
       return val;        
     }
-  }
+  }  
 
-  var totalTime = 2;
-  var timeshow = progress(totalTime, totalTime, $('#progressBar'));  
+  var r = new randomGenerator(0, randomMax);
+  insertQuestion(quesStack,r);
 
-  var r = new randomGenerator(0, 8);
-  insertQuestion(arr1,r);
-
-  $('.qtresult > div').click(function() {
-    // clearTimeout(timeDelay);
-    // var answerSelect = $(this).children().attr('data-answer');
-    // if(answerSelect != 0){
-    //   $('.result-panel').addClass('active').children().attr('src', success);
-    //   var timeDelay = setTimeout(function() {
-    //     $('.result-panel').removeClass('active');
-    //     insertQuestion(arr1,r);
-    //   }, 1000);
-    // }else{
-    //   $('.result-panel').addClass('active').children().attr('src', failed);
-    //   var timeDelay = setTimeout(function() {
-    //     $('.result-panel').removeClass('active');
-    //     ShowSignUp('#restart', 'none');
-    //   }, 2000);
-    // }
-    console.log(timeshow);
+  $('.btn-answer').click(function() {
+    var answerSelect = $(this).children().attr('data-answer');
+    clearTimeout(progDelay); // clear timeout in progress
+    if(answerSelect != 0){
+      effectPages(function(){
+        insertQuestion(quesStack,r);
+        progressTime(totalTime, totalTime, $('#progressBar'));
+      },gameSuccess,1000);
+    }else{
+      effectPages(function(){
+        redirectPages('#restart', 'none');
+      },gameFailed,2000);
+    }
   });
 
   $('.btn-start').click(function() {
-    // var counter = totalTime;
-    // var interval = setInterval(function() {
-    //   counter--;
-    //   if (counter < 1) {
-    //     clearInterval(interval);
-    //   }
-    // }, 1000);
-    ShowSignUp('#main');
+    effectPages(function(){
+      redirectPages('#main', 'none');
+      progressTime(totalTime, totalTime, $('#progressBar'));
+    },gameStart,2000);
   });
 
   $('.btn-restart').click(function() {
-    clearTimeout(timeDelay);
-    $('.result-panel').addClass('active').children().attr('src', gameStart);
-      var timeDelay = setTimeout(function() {
-        $('.result-panel').removeClass('active');
-        insertQuestion(arr1,r);
-        ShowSignUp('#main', 'none');
-      }, 2000);
+    effectPages(function(){
+      insertQuestion(quesStack,r);
+      redirectPages('#main', 'none');
+      progressTime(totalTime, totalTime, $('#progressBar'));
+    },gameStart,2000);
   });
+
+  function effectPages(object,type,time){
+    clearTimeout(timeDelay);
+    $('.result-panel').addClass('active').children().attr('src', type);
+    var timeDelay = setTimeout(function() {
+      $('.result-panel').removeClass('active');
+      object();
+    }, time);
+  }
 
   function insertQuestion(newArr, r){
     var elementArr = newArr[r.get()];
     // console.log(elementArr.name);
     qtimg.children().attr("src", pathImg + elementArr.img + imgJpg);
     qtname.text(elementArr.name);
-    qtleft.children().text(elementArr.left).attr({'data-answer': elementArr.anleft});
-    qtright.children().text(elementArr.right).attr({'data-answer': elementArr.anright});
+    qtleft.children().text(elementArr.anleft + elementArr.left).attr({'data-answer': elementArr.anleft});
+    qtright.children().text(elementArr.anright + elementArr.right).attr({'data-answer': elementArr.anright});
   };
 
-  function ShowSignUp(page,effect){
+  function redirectPages(page,effect){
     if(effect !== null){
       $.mobile.changePage( page, { transition: effect} );
     }else{
@@ -115,53 +114,19 @@ $('document').ready(function(){
     this.reset();
   }
 
-  function progress(timeleft, timetotal, $element) {
-    var timeleft1 = timeleft;
+  function progressTime(timeleft, timetotal, $element) {
     var progressBarWidth = timeleft * $element.width() / timetotal;
-    $element.find('div').animate({ width: progressBarWidth }, timeleft == timetotal ? 0 : 1000, 'linear');
-    if(timeleft > 0) {
-      setTimeout(function() {
-        progress(timeleft - 1, timetotal, $element);
+    $element.find('div').stop().animate({ width: progressBarWidth }, timeleft == timetotal ? 0 : 1000, 'linear').attr('data-time', timeleft);
+    if(timeleft >= 0) {
+      progDelay = setTimeout(function() {
+        progressTime(timeleft - 1, timetotal, $element);
       }, 1000);
+    }else{
+      effectPages(function(){
+        redirectPages('#restart', 'none');
+      },gameTimeup,2000);
     }
-    return timeleft1;
   }
-
-// var arr = ["mon","tues","wed"];
-// var arr = [];
-
-// arr[0] = "mon";
-// arr[1] = "tues";
-// arr[2] = "wed";
-
-// arr["drink"] = "beer";
-// arr["music"] = "jazz";
-
-// arr.push({
-//   name: "bart simpson",
-//   phone: "555-1212"
-// });
-
-// arr.push(function(){
-//   console.log('i am an element of the array "arr", that happens to be an anonymous function');
-// });
-
-// arr.testMe = function(){
-//   console.log('i am "testMe", a property of the array "arr", that happens to be an anonymour function');
-// };
-
-
-// console.log("the length of arr is: " + arr.length);
-// console.dir(arr1);
-
-// arr[4]();
-// arr.testMe();
-
-// console.log("Name: " + arr[3].name + "\nPhone: " + arr[3].phone);
-
-// for (var prop in arr){
-//   console.log("Prop: " + arr[prop]);
-// }
 
 
 
