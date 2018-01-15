@@ -345,16 +345,42 @@ iframe {
   }
 }
 
+.qthighscore {
+  line-height: 28px;
+  font-size: 90%;
+  font-weight: bold;
+}
+.qtscore {
+  position: absolute;
+  top: 61px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 5px 0;
+}
+.qtscore span {
+  display: inline-block;
+  line-height: 32px;
+  border: 1px solid #f00;
+  padding: 5px;
+  background: #333;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 50%;
+  letter-spacing: 1px;
+  min-width: 32px;
+  font-size: 85%;
+}
 #progressBar {
   width: 100%;
-  margin: 10px auto;
-  height: 22px;
+  margin: 0 auto;
+  height: 5px;
   background-color: #0A5F44;
 }
 #progressBar div {
   height: 100%;
   text-align: right;
-  line-height: 22px;
+  line-height: 5px;
   background-color: #CBEA00;
   box-sizing: border-box;
 }

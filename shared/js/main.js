@@ -8,12 +8,17 @@ $('document').ready(function(){
   qtright = $('.qtright');
   pathImg = 'shared/img/question/';
   imgJpg = '.jpg';
+  var progessBar = $('#progressBar');
+  var qtscore = $('.qtscore');
+  var qthighscore = $('.qthighscore');
   var gameSuccess = 'shared/img/common/success.gif';
   var gameFailed = 'shared/img/common/failed.gif';
   var gameStart = 'shared/img/common/start.gif';
   var gameTimeup = 'shared/img/common/timeup.gif';
   var totalTime = 3; //time for progress bar
   var randomMax = 8; //maximum show question
+  var totalScore = 0;
+
 
   var quesStack = [
     {img: "testquestion1", name: "Ai đây1?", left: "Zuka1", right: "Wukong1", anleft: 1, anright: 0},
@@ -46,15 +51,25 @@ $('document').ready(function(){
   }  
 
   var r = new randomGenerator(0, randomMax);
-  insertQuestion(quesStack,r);
+
+  // var storage = window.localStorage;
+  // storage.setItem("totalScore", 0);
+  // var parseInt(qtscore.children().text(), 10)
+  // if (storage.getItem("totalScore") < null) {
+  //     setTimeout(function(){
+  //         document.getElementById("wrap-review").classList.add('active');
+  //     }, 180000);
+  // }
+
 
   $('.btn-answer').click(function() {
     var answerSelect = $(this).children().attr('data-answer');
     clearTimeout(progDelay); // clear timeout in progress
     if(answerSelect != 0){
       effectPages(function(){
+        calcScore(progessBar.children().attr('data-time'));
         insertQuestion(quesStack,r);
-        progressTime(totalTime, totalTime, $('#progressBar'));
+        progressTime(totalTime, totalTime, progessBar);
       },gameSuccess,1000);
     }else{
       effectPages(function(){
@@ -63,18 +78,38 @@ $('document').ready(function(){
     }
   });
 
+  function calcScore(score){
+    var intScore = parseInt(score) + 1;
+    var curScore = parseInt(qtscore.children().text(), 10);
+    var calc = curScore + (intScore > 3 ? 3 : intScore)*5;
+    qtscore.children().prop('number', curScore).animateNumber({
+      number: calc
+    },1000);
+    qtscore.addClass('animated bounceIn');
+    setTimeout(function() {
+      qtscore.removeClass('animated bounceIn');
+    }, 1000);
+  }
+
+  function resetScore(){
+    qtscore.children().text(0);
+  }
+
   $('.btn-start').click(function() {
     effectPages(function(){
+      resetScore();
+      insertQuestion(quesStack,r);
       redirectPages('#main', 'none');
-      progressTime(totalTime, totalTime, $('#progressBar'));
+      progressTime(totalTime, totalTime, progessBar);
     },gameStart,2000);
   });
 
   $('.btn-restart').click(function() {
     effectPages(function(){
+      resetScore();
       insertQuestion(quesStack,r);
       redirectPages('#main', 'none');
-      progressTime(totalTime, totalTime, $('#progressBar'));
+      progressTime(totalTime, totalTime, progessBar);
     },gameStart,2000);
   });
 
@@ -89,7 +124,6 @@ $('document').ready(function(){
 
   function insertQuestion(newArr, r){
     var elementArr = newArr[r.get()];
-    // console.log(elementArr.name);
     qtimg.children().attr("src", pathImg + elementArr.img + imgJpg);
     qtname.text(elementArr.name);
     qtleft.children().text(elementArr.anleft + elementArr.left).attr({'data-answer': elementArr.anleft});
