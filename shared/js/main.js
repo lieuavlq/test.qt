@@ -20,6 +20,14 @@ $('document').ready(function(){
   var totalScore = 0;
 
 
+  /* Show High Score */
+  var storage = window.localStorage;
+  var currentScore = storage.getItem("totalScore");
+  if(currentScore === null){
+    currentScore = 0;
+  }
+  qthighscore.children().text(currentScore);
+
   var quesStack = [
     {img: "testquestion1", name: "Ai đây1?", left: "Zuka1", right: "Wukong1", anleft: 1, anright: 0},
     {img: "testquestion2", name: "Ai đây2?", left: "Zuka2", right: "Wukong2", anleft: 1, anright: 0},
@@ -52,16 +60,6 @@ $('document').ready(function(){
 
   var r = new randomGenerator(0, randomMax);
 
-  // var storage = window.localStorage;
-  // storage.setItem("totalScore", 0);
-  // var parseInt(qtscore.children().text(), 10)
-  // if (storage.getItem("totalScore") < null) {
-  //     setTimeout(function(){
-  //         document.getElementById("wrap-review").classList.add('active');
-  //     }, 180000);
-  // }
-
-
   $('.btn-answer').click(function() {
     var answerSelect = $(this).children().attr('data-answer');
     clearTimeout(progDelay); // clear timeout in progress
@@ -74,26 +72,10 @@ $('document').ready(function(){
     }else{
       effectPages(function(){
         redirectPages('#restart', 'none');
+        getHighscore();
       },gameFailed,2000);
     }
   });
-
-  function calcScore(score){
-    var intScore = parseInt(score) + 1;
-    var curScore = parseInt(qtscore.children().text(), 10);
-    var calc = curScore + (intScore > 3 ? 3 : intScore)*5;
-    qtscore.children().prop('number', curScore).animateNumber({
-      number: calc
-    },1000);
-    qtscore.addClass('animated bounceIn');
-    setTimeout(function() {
-      qtscore.removeClass('animated bounceIn');
-    }, 1000);
-  }
-
-  function resetScore(){
-    qtscore.children().text(0);
-  }
 
   $('.btn-start').click(function() {
     effectPages(function(){
@@ -112,6 +94,48 @@ $('document').ready(function(){
       progressTime(totalTime, totalTime, progessBar);
     },gameStart,2000);
   });
+
+  /* Functions */
+  function getHighscore(){
+    var pointRound = parseInt(qtscore.children().text(),10);
+    var oldHighscore = storage.getItem("totalScore");
+    if(pointRound > oldHighscore){
+      storage.setItem("totalScore", pointRound);
+      qthighscore.children().text(storage.getItem("totalScore"));
+    }
+  }
+
+  function calcScore(score){
+    var intScore = parseInt(score) + 1;
+    var curScore = parseInt(qtscore.children().text(), 10);
+    var calc = curScore + (intScore > 3 ? 3 : intScore)*5;
+    qtscore.children().prop('number', curScore).animateNumber({
+      number: calc
+    },1000);
+    qtscore.addClass('animated bounceIn');
+    setTimeout(function() {
+      qtscore.removeClass('animated bounceIn');
+    }, 1000);
+  }
+
+  function resetScore(){
+    qtscore.children().text(0);
+  }
+
+  function progressTime(timeleft, timetotal, $element) {
+    var progressBarWidth = timeleft * $element.width() / timetotal;
+    $element.find('div').stop().animate({ width: progressBarWidth }, timeleft == timetotal ? 0 : 1000, 'linear').attr('data-time', timeleft);
+    if(timeleft >= 0) {
+      progDelay = setTimeout(function() {
+        progressTime(timeleft - 1, timetotal, $element);
+      }, 1000);
+    }else{
+      effectPages(function(){
+        getHighscore();
+        redirectPages('#restart', 'none');
+      },gameTimeup,2000);
+    }
+  }  
 
   function effectPages(object,type,time){
     clearTimeout(timeDelay);
@@ -146,20 +170,6 @@ $('document').ready(function(){
     this.low = low;
     this.high = high;
     this.reset();
-  }
-
-  function progressTime(timeleft, timetotal, $element) {
-    var progressBarWidth = timeleft * $element.width() / timetotal;
-    $element.find('div').stop().animate({ width: progressBarWidth }, timeleft == timetotal ? 0 : 1000, 'linear').attr('data-time', timeleft);
-    if(timeleft >= 0) {
-      progDelay = setTimeout(function() {
-        progressTime(timeleft - 1, timetotal, $element);
-      }, 1000);
-    }else{
-      effectPages(function(){
-        redirectPages('#restart', 'none');
-      },gameTimeup,2000);
-    }
   }
 
 
