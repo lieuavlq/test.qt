@@ -26,6 +26,12 @@ $('document').ready(function(){
 
   var storage = window.localStorage;
 
+  // function resetHighscore(){
+  //   storage.setItem("totalScore", 0);
+  // }
+  // resetHighscore();
+  storage.setItem("totalScore", 810);
+
   /* Show Rank */
   getRank();
 
@@ -181,6 +187,13 @@ $('document').ready(function(){
         }
       }
     }
+
+    clearTimeout(time);
+    $('.qtrankimg img').addClass('animated jackInTheBox');
+    var time = setTimeout(function(){
+      $('.qtrankimg img').removeClass('jackInTheBox').addClass('infinite pulse');
+    },2000);
+    
   }
 
   function getStar() {
@@ -215,12 +228,6 @@ $('document').ready(function(){
       qthighscore.children().text(storage.getItem("totalScore"));
     }
   }
-
-  // function resetHighscore(){
-  //   storage.setItem("totalScore", 0);
-  // }
-  // resetHighscore();
-  storage.setItem("totalScore", 115);
 
   function calcScore(score){
     var valStar = getStar();
