@@ -345,15 +345,16 @@ iframe {
   }
 }
 
-.qtrankimg {
-  height: 152px;
+
+.qthighscorestage {
+  font-weight: bold;
+  color: #f00;
+  display: none;
 }
 .qtrankimg img {
   -ms-animation-duration: 2s;
   -moz-animation-duration: 2s;
   -webkit-animation-duration: 2s;
-  height: 100%;
-  width: auto;
 }
 .qtrankwrap {
   text-align: center;
@@ -410,7 +411,7 @@ iframe {
   color: #f00;
   font-style: italic;
 }
-.qtnewscrore {
+.qtnewscore {
   font-weight: bold;
   color: #f00;
 }

@@ -13,7 +13,7 @@ $('document').ready(function(){
   var progessBar = $('#progressBar');
   var qtscore = $('.qtscore');
   var qthighscore = $('.qthighscore');
-  var qtnewscore = $('.qtnewscrore');
+  var qtnewscore = $('.qtnewscore');
   var gameSuccess = 'shared/img/common/success.gif';
   var gameFailed = 'shared/img/common/failed.gif';
   var gameStart = 'shared/img/common/start.gif';
@@ -30,7 +30,7 @@ $('document').ready(function(){
   //   storage.setItem("totalScore", 0);
   // }
   // resetHighscore();
-  storage.setItem("totalScore", 810);
+  // storage.setItem("totalScore", 0);
 
   /* Show Rank */
   getRank();
@@ -142,6 +142,11 @@ $('document').ready(function(){
       {id: 'kc1', name: 'Kim Cương 1', img: 'shared/img/common/icon_kc.png'},
       {id: 'ct', name: 'Cao Thủ', img: 'shared/img/common/icon_ct.png'},
     ];
+    if(rankScore > 0) {
+      qtrankimg.show();
+    }else{
+      qtrankimg.hide();
+    }
 
     switch(true){
       case rankScore <= 0: element = 'chuaco'; break;
@@ -189,11 +194,10 @@ $('document').ready(function(){
     }
 
     clearTimeout(time);
-    $('.qtrankimg img').addClass('animated jackInTheBox');
+    $('.qtrankimg img').addClass('animated tada');
     var time = setTimeout(function(){
-      $('.qtrankimg img').removeClass('jackInTheBox').addClass('infinite pulse');
+      $('.qtrankimg img').removeClass('tada').addClass('infinite pulse');
     },2000);
-    
   }
 
   function getStar() {
@@ -222,10 +226,16 @@ $('document').ready(function(){
     var qtcurrentscore = qtscore.children().text();
     var pointRound = parseInt(qtcurrentscore,10);
     var oldHighscore = storage.getItem("totalScore");
-    qtnewscore.children().text(qtcurrentscore);
+    var qthighscorestage = $('.qthighscorestage');
+    
     if(pointRound > oldHighscore){
       storage.setItem("totalScore", pointRound);
       qthighscore.children().text(storage.getItem("totalScore"));
+      qthighscorestage.show().children().text(qtcurrentscore);
+      qtnewscore.hide();
+    }else{
+      qthighscorestage.hide();
+      qtnewscore.show().children().text(qtcurrentscore);
     }
   }
 
