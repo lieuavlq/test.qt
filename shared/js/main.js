@@ -8,6 +8,8 @@ $('document').ready(function(){
   qtright = $('.qtright');
   pathImg = 'shared/img/question/';
   imgJpg = '.jpg';
+  var soundShared = 'shared/sound/';
+  var uiBtn = $('.ui-btn, .ui-btn-left, .ui-btn-right, .lvg_class');
   var qtstar = $('.qtstar');
   var qtnotify = $('.qtnotify');
   var progessBar = $('#progressBar');
@@ -26,10 +28,7 @@ $('document').ready(function(){
 
   var storage = window.localStorage;
 
-  // function resetHighscore(){
-  //   storage.setItem("totalScore", 0);
-  // }
-  // resetHighscore();
+  //reset score
   // storage.setItem("totalScore", 0);
 
   /* Show Rank */
@@ -78,6 +77,7 @@ $('document').ready(function(){
     var answerSelect = $(this).children().attr('data-answer');
     clearTimeout(progDelay);
     if(answerSelect != 0){
+      soundRun('true_click');
       effectPages(function(){
         calcScore(progessBar.children().attr('data-time'));
         insertQuestion(quesStack,r);
@@ -85,6 +85,7 @@ $('document').ready(function(){
         progressTime(totalTime, totalTime, progessBar);
       },gameSuccess,1000);
     }else{
+      soundRun('false_click');
       effectPages(function(){
         redirectPages('#restart', 'none');
         getHighscore();
@@ -210,6 +211,7 @@ $('document').ready(function(){
   }
 
   function getTimeup(){
+    soundRun('timeup_click');
     effectPages(function(){
       getHighscore();
       getNotify(txtTimeup);
@@ -310,6 +312,26 @@ $('document').ready(function(){
     this.reset();
   }
 
+  /* Main click */
+  // var click01 = soundShared + 'click01.wav';
+  var click02 = soundShared + 'click02.ogg';
+  var clickTrue = soundShared + 'true.mp3';
+  var clickFalse = soundShared + 'false.mp3';
+  var clickTimeup = soundShared + 'timeup.mp3';
+  var typeOgg = 'audio/ogg';
+  var typeWav = 'audio/wav';
+  var typeMpeg = 'audio/mpeg';
+  body.append('<audio id="main_click" src="'+ click02 +'" type="'+ typeOgg +'"></audio>');
+  body.append('<audio id="true_click" src="'+ clickTrue +'" type="'+ typeMpeg +'"></audio>');
+  body.append('<audio id="false_click" src="'+ clickFalse +'" type="'+ typeMpeg +'"></audio>');
+  body.append('<audio id="timeup_click" src="'+ clickTimeup +'" type="'+ typeMpeg +'"></audio>');
+  uiBtn.on('click', function(){
+    soundRun('main_click');
+  });
+
+  function soundRun(item){
+    $('#' + item).get(0).play();
+  }
 
 
 
@@ -353,16 +375,17 @@ $('document').ready(function(){
 
 
 
-  var imgShared = 'shared/img/';
-  var soundShared = 'shared/sound/';
-  var uiBtn = $('.ui-btn, .ui-btn-left, .ui-btn-right, .lvg_class');
-  var systemLink = $('.btn-sys');
+
+  // var imgShared = 'shared/img/';
+  // var soundShared = 'shared/sound/';
+  // var uiBtn = $('.ui-btn, .ui-btn-left, .ui-btn-right, .lvg_class');
+  // var systemLink = $('.btn-sys');
 
   /* Open link outsite */
-  systemLink.click(function() {
-    var hrefA = $(this).attr('href');
-    cordova.InAppBrowser.open(hrefA, '_system', null);
-  });
+  // systemLink.click(function() {
+  //   var hrefA = $(this).attr('href');
+  //   cordova.InAppBrowser.open(hrefA, '_system', null);
+  // });
 
   /* Set time out for wall */
   // var frontWall = $('.front-wall');
@@ -370,100 +393,90 @@ $('document').ready(function(){
   // body.addClass('wall-active');
 
   /* Open url */
-  var lvgAWalls = $('.lvg_walls .ui-block-a a');
-  var lvgBWalls = $('.lvg_walls .ui-block-b a');
-  lvgAWalls.click(function() {
-    var hrefA = $(this).attr('href');
-    cordova.InAppBrowser.open(hrefA, '_blank', 'location=yes');
-  });
-  lvgBWalls.click(function() {
-    var hrefA = $(this).attr('href');
-    cordova.InAppBrowser.open(hrefA, '_system', null);
-  });
+  // var lvgAWalls = $('.lvg_walls .ui-block-a a');
+  // var lvgBWalls = $('.lvg_walls .ui-block-b a');
+  // lvgAWalls.click(function() {
+  //   var hrefA = $(this).attr('href');
+  //   cordova.InAppBrowser.open(hrefA, '_blank', 'location=yes');
+  // });
+  // lvgBWalls.click(function() {
+  //   var hrefA = $(this).attr('href');
+  //   cordova.InAppBrowser.open(hrefA, '_system', null);
+  // });
 
   /* Slider images */
-  $('.lvg_slider').slick({
-    infinite: false,
-    speed: 300,
-    slidesToShow: 1,
-    variableWidth: true,
-    arrows: false
-  });
+  // $('.lvg_slider').slick({
+  //   infinite: false,
+  //   speed: 300,
+  //   slidesToShow: 1,
+  //   variableWidth: true,
+  //   arrows: false
+  // });
 
   /* Skills */
-  var skills = $('.lvg_incskill');
-  skills.children('div').each(function(){
-    var text = $(this).text();
-    var splText = text.split(',');
-    $(this).text('');
-    for(var i = 1; i <= 15; i++){
-      $(this).append('<span>' + i + '</span>');
-    }
-    for(var j = 0; j < splText.length; j++){
-      $(this).children('span').eq(splText[j] - 1).addClass('active');
-    }
-  });
+  // var skills = $('.lvg_incskill');
+  // skills.children('div').each(function(){
+  //   var text = $(this).text();
+  //   var splText = text.split(',');
+  //   $(this).text('');
+  //   for(var i = 1; i <= 15; i++){
+  //     $(this).append('<span>' + i + '</span>');
+  //   }
+  //   for(var j = 0; j < splText.length; j++){
+  //     $(this).children('span').eq(splText[j] - 1).addClass('active');
+  //   }
+  // });
 
   /* Selecte class */
-  var selectClass = $('.lvg_class');
-  var selectChamps = $('.lvg_select_champs');
-  selectClass.on('change', function() {
-    var value = $(this).children('option:selected').val();
-    selectChamps.children().hide();
-    selectChamps.children('.' + value).show();
-    if(value == 'tatca'){
-      selectChamps.children().show();
-    }
-  });
+  // var selectClass = $('.lvg_class');
+  // var selectChamps = $('.lvg_select_champs');
+  // selectClass.on('change', function() {
+  //   var value = $(this).children('option:selected').val();
+  //   selectChamps.children().hide();
+  //   selectChamps.children('.' + value).show();
+  //   if(value == 'tatca'){
+  //     selectChamps.children().show();
+  //   }
+  // });
 
   /* Runes */
-  var skillsSP = $('.lvg_items');
-  skillsSP.find('.item').each(function() {
-    var text = $(this).text();
-    $(this).css({'background-image':'url('+ imgShared + 'items/' + text + '.png)'});
-  });
+  // var skillsSP = $('.lvg_items');
+  // skillsSP.find('.item').each(function() {
+  //   var text = $(this).text();
+  //   $(this).css({'background-image':'url('+ imgShared + 'items/' + text + '.png)'});
+  // });
 
   /* Runes */
-  var skillsSP = $('.lvg_runes');
-  skillsSP.find('.rune').each(function() {
-    var text = $(this).text();
-    $(this).css({'background-image':'url('+ imgShared + 'runes/' + text + '.png)'});
-  });
+  // var skillsSP = $('.lvg_runes');
+  // skillsSP.find('.rune').each(function() {
+  //   var text = $(this).text();
+  //   $(this).css({'background-image':'url('+ imgShared + 'runes/' + text + '.png)'});
+  // });
 
   /* Skills Support */
-  var skillsSP = $('.lvg_skills_sp');
-  skillsSP.find('a').each(function() {
-    var text = $(this).text();
-    $(this).css({'background-image':'url('+ imgShared + 'skills/' + text + '.png)'});
-  });
+  // var skillsSP = $('.lvg_skills_sp');
+  // skillsSP.find('a').each(function() {
+  //   var text = $(this).text();
+  //   $(this).css({'background-image':'url('+ imgShared + 'skills/' + text + '.png)'});
+  // });
 
   /* Skills */
-  var skills = $('.lvg_skills');
-  skills.find('.skill').each(function() {
-    var text = $(this).text();
-    var champSkill = $(this).parents('.lvg_skills').data('skill');
-    if(text !== 'normal'){
-      $(this).css({'background-image':'url('+ imgShared + 'champs/' + champSkill + '/' + text + '.png)'});
-    }else{
-      $(this).css({'background-image':'url('+ imgShared + 'common/normal.png)'});
-    }
-  });
+  // var skills = $('.lvg_skills');
+  // skills.find('.skill').each(function() {
+  //   var text = $(this).text();
+  //   var champSkill = $(this).parents('.lvg_skills').data('skill');
+  //   if(text !== 'normal'){
+  //     $(this).css({'background-image':'url('+ imgShared + 'champs/' + champSkill + '/' + text + '.png)'});
+  //   }else{
+  //     $(this).css({'background-image':'url('+ imgShared + 'common/normal.png)'});
+  //   }
+  // });
 
   /* Champions */
-  var champs = $('.lvg_champs');
-  champs.find('a').each(function() {
-    var href = $(this).attr('href');
-    $(this).css({'background-image':'url('+ imgShared + 'champs/' + href.replace('#', '') +'/avat1.jpg)'});
-  });
-
-  /* Main click */
-  var click01 = soundShared + 'click01.wav';
-  var click02 = soundShared + 'click02.ogg';
-  var typeOgg = 'audio/ogg';
-  var typeWav = 'audio/wav';
-  body.append('<audio id="main_click" src="'+ click02 +'" type="'+ typeOgg +'"></audio>');
-  uiBtn.on('click', function(){
-    $('#main_click').get(0).play();
-  });
+  // var champs = $('.lvg_champs');
+  // champs.find('a').each(function() {
+  //   var href = $(this).attr('href');
+  //   $(this).css({'background-image':'url('+ imgShared + 'champs/' + href.replace('#', '') +'/avat1.jpg)'});
+  // });
 
 });
