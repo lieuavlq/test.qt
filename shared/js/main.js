@@ -43,14 +43,14 @@ $('document').ready(function(){
 
   var quesStack = [
     {img: "testquestion1", name: "Ai đây1?", left: "Zuka1", right: "Wukong1", anleft: 1, anright: 0, star: 0},
-    {img: "testquestion2", name: "Ai đây2?", left: "Zuka2", right: "Wukong2", anleft: 1, anright: 0, star: 1},
+    {img: "thuonglong", name: "Ai đây2?", left: "Zuka2", right: "Wukong2", anleft: 1, anright: 0, star: 1},
     {img: "testquestion3", name: "Ai đây3?", left: "Zuka3", right: "Wukong3", anleft: 1, anright: 0, star: 0},
-    {img: "testquestion4", name: "Ai đây4?", left: "Zuka4", right: "Wukong4", anleft: 1, anright: 0, star: 1},
+    {img: "thuonglong", name: "Ai đây4?", left: "Zuka4", right: "Wukong4", anleft: 1, anright: 0, star: 1},
     {img: "testquestion5", name: "Ai đây5?", left: "Zuka5", right: "Wukong5", anleft: 1, anright: 0, star: 1},
     {img: "testquestion6", name: "Ai đây6?", left: "Zuka6", right: "Wukong6", anleft: 1, anright: 0, star: 1},
-    {img: "testquestion7", name: "Ai đây7?", left: "Zuka7", right: "Wukong7", anleft: 1, anright: 0, star: 0},
+    {img: "thuonglong", name: "Ai đây7?", left: "Zuka7", right: "Wukong7", anleft: 1, anright: 0, star: 0},
     {img: "testquestion8", name: "Ai đây8?", left: "Zuka8", right: "Wukong8", anleft: 1, anright: 0, star: 1},
-    {img: "testquestion9", name: "Ai đây9?", left: "Zuka9", right: "Wukong9", anleft: 1, anright: 0, star: 0}
+    {img: "thuonglong", name: "Ai đây9?", left: "Zuka9", right: "Wukong9", anleft: 1, anright: 0, star: 0}
   ]
 
   randomGenerator.prototype = {

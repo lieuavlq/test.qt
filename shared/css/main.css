@@ -1,16 +1,15 @@
 @charset "utf-8";
-body, input, select, textarea, button, .ui-btn {
-  font-family: Tahoma, Geneva, sans-serif;
+@font-face {
+  font-family: 'Baloo';
+  src: url('../font/Baloo-Regular.ttf') format('truetype');
+}
+body,
+.ui-btn {
+  font-family: 'Baloo', cursive;
 }
 body {
-  /*background: #000 url(../img/common/img_logo_01.png) no-repeat center;*/
-  /*background-size: 200px;*/
-}
-body.wall-active {
-  background-size: auto;
-  background-image: url(../img/common/bg.jpg);
-  background-attachment: fixed;
-  background-position: center top;
+  font-size: 16px;
+  line-height: 24px;
 }
 img {
   max-width: 100%;
@@ -32,11 +31,6 @@ img {
 .ui-page-theme-a .ui-bar-inherit {
   border: none;
 }
-/*.ui-mobile .ui-page {
-  background-color: transparent;
-  color: #fff;
-  text-shadow: none;
-}*/
 .lvg_select .ui-select .ui-btn,
 .lvg_select .ui-page-theme-a .ui-btn:active,
 .lvg_select .ui-page-theme-a .ui-btn:hover {
