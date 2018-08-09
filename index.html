@@ -3,14 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-  <title>Cẩm Nang Liên Quân</title>
+  <title>Thách Đấu Cùng Zuka</title>
   <link rel="stylesheet" href="shared/css/jquery.mobile-1.4.5.min.css">
-  <link rel="stylesheet" href="shared/css/slick.css">
   <link rel="stylesheet" href="shared/css/animate.css">
   <link rel="stylesheet" href="shared/css/main.css">
   <script type="text/javascript" src="shared/js/jquery-1.11.1.min.js"></script>
   <script type="text/javascript" src="shared/js/jquery.mobile-1.4.5.min.js"></script>
-  <script type="text/javascript" src="shared/js/slick.min.js"></script>
   <script type="text/javascript" src="shared/js/jquery.animateNumber.min.js"></script>
   <script type="text/javascript" src="shared/js/main.js"></script>
 </head>
@@ -21,12 +19,20 @@
   <!-- Start of first page: #firstpage -->
   <div data-role="page" id="firstpage">
     <div role="main" class="ui-content">
-      <div class="qtrankwrap">
+      <div class="zkbrd01"><div class="zkbrd02"><div class="zkbrd03"><div class="zkbrd04">
+        <div class="zktitle"><span>Hạng Cao Nhất</span></div>
         <div class="qtrank"><span>chưa có</span></div>
         <div class="qthighscore">_ <span>0</span> điểm _</div>
         <div class="qtrankimg"><img src="#" alt="#"></div>
+        <div class="btn-start zkbtn"><span>Bắt Đầu Nào!</span></div>
+      </div></div></div></div>
+      <div class="zkpanel-free01">
+        <div class="zkpanel-free02">
+          <div class="zkbtn-circle">
+            <a href="#firstpage"><span>&nbsp;</span></a><a href="#rank"><span>&nbsp;</span></a><a href="#info"><span>&nbsp;</span></a>
+          </div>
+        </div>
       </div>
-      <div class="btn-start">Bắt đầu nào</div>
     </div>
   </div>
 
@@ -34,16 +40,18 @@
   <div data-role="page" id="main">
     <div role="main" class="ui-content">
       <div class="qthighscore">Điểm cao: <span>0</span> điểm</div>
-      <div class="qtimg"><img src="#" alt=""></div>
+      <div class="qtscore"><span>#</span></div>
       <div id="progressBar">
         <div></div>
       </div>
-      <div class="qtname">#</div>
+      <div class="qtimg">
+        <img src="#" alt="">
+        <div class="qtname">#</div>
+      </div>
       <div class="qtresult">
         <div class="btn-answer qtleft"><span>#</span></div>
         <div class="btn-answer qtright"><span>#</span></div>
       </div>
-      <div class="qtscore"><span>#</span></div>
       <div class="qtstar"><img src="shared/img/common/icon_star.gif" alt=""></div>
     </div><!-- /content -->
   </div><!-- /page main -->
@@ -51,15 +59,31 @@
   <!-- Start of first page: #restart -->
   <div data-role="page" id="restart">
     <div role="main" class="ui-content">
-      <div class="qtnotify"><span>#</span></div>
-      <div class="qtnewscore">Ván vừa rồi: <span>0</span> điểm</div>
-      <div class="qthighscorestage">Điểm cao mới: <span>0</span> điểm</div>
-      <div class="btn-restart">Chơi lại</div>
-      <a href="#firstpage" class="ui-btn">Màn hình chính</a>
-      <div class="qtrankwrap">
-        <div class="qtrank"><span>chưa có</span></div>
-        <div class="qthighscore">_ <span>0</span> điểm _</div>
-        <div class="qtrankimg"><img src="#" alt="#"></div>
+      <div class="zkbrd01"><div class="zkbrd02"><div class="zkbrd03"><div class="zkbrd04">
+        <div class="zktitle qtnotify"><span>#</span></div>
+        <div class="zkpanel zkmt0">
+          <div class="qtnewscore">Ván vừa rồi<br><span class="zkpanel-span">0</span> điểm</div>
+          <div class="qthighscorestage">Điểm cao mới<br><span class="zkpanel-span">0</span> điểm</div>
+        </div>
+        <div class="zkhr"></div>
+        <div class="zkpanel zkmb0">
+          <div class="qtrankwrap">
+            <div><span class="zkpanel-span">Hạng Cao Nhất</span></div>
+            <div class="zkcol zkfs-small">
+              <div class="qtrank"><span>chưa có</span> - </div>
+              <div class="qthighscore"><span>0</span> điểm</div>
+            </div>
+            <div class="qtrankimg"><img src="#" alt="#"></div>
+          </div>
+        </div>
+        <div class="btn-restart zkbtn"><span>Chơi Lại Nào!</span></div>
+      </div></div></div></div>
+      <div class="zkpanel-free01">
+        <div class="zkpanel-free02">
+          <div class="zkbtn-circle">
+            <a href="#firstpage"><span>&nbsp;</span></a><a href="#rank"><span>&nbsp;</span></a><a href="#info"><span>&nbsp;</span></a>
+          </div>
+        </div>
       </div>
     </div><!-- /content -->
   </div><!-- /page main -->
