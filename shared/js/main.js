@@ -42,15 +42,20 @@ $('document').ready(function(){
   qthighscore.children().text(currentScore);
 
   var quesStack = [
-    {img: "testquestion1", name: "Ai đây1?", left: "Zuka1", right: "Wukong1", anleft: 1, anright: 0, star: 0},
-    {img: "thuonglong", name: "Ai đây2?", left: "Zuka2", right: "Wukong2", anleft: 1, anright: 0, star: 1},
-    {img: "testquestion3", name: "Ai đây3?", left: "Zuka3", right: "Wukong3", anleft: 1, anright: 0, star: 0},
-    {img: "thuonglong", name: "Ai đây4?", left: "Zuka4", right: "Wukong4", anleft: 1, anright: 0, star: 1},
-    {img: "testquestion5", name: "Ai đây5?", left: "Zuka5", right: "Wukong5", anleft: 1, anright: 0, star: 1},
-    {img: "testquestion6", name: "Ai đây6?", left: "Zuka6", right: "Wukong6", anleft: 1, anright: 0, star: 1},
-    {img: "thuonglong", name: "Ai đây7?", left: "Zuka7", right: "Wukong7", anleft: 1, anright: 0, star: 0},
-    {img: "testquestion8", name: "Ai đây8?", left: "Zuka8", right: "Wukong8", anleft: 1, anright: 0, star: 1},
-    {img: "thuonglong", name: "Ai đây9?", left: "Zuka9", right: "Wukong9", anleft: 1, anright: 0, star: 0}
+    {img: "alice", name: "Alice là một pháp sư?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 0},
+    {img: "alice4", name: "Alice là một trợ thủ?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 1},
+    {img: "mina", name: "Chiêu cuối Alice có câm lặng?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 0},
+    {img: "mina4", name: "Liliana là một pháp sư?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 1},
+    {img: "butter", name: "Liliana có hai dạng biến hình?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 1},
+    {img: "butter4", name: "Thương Long có hút máu?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 1},
+    {img: "krixi", name: "Kiếm điện luôn kích hoạt giặt điện?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 0},
+    {img: "krixi4", name: "Kinh Kong giúp tăng tốc chạy?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 1},
+    {img: "slimz", name: "Ai là người chơi game đâu tiên?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 0},
+    {img: "slimz4", name: "Ai là người chơi game đâu tiên?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 0},
+    {img: "tocbien", name: "Ai là người chơi game đâu tiên?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 0},
+    {img: "bocpha", name: "Ai là người chơi game đâu tiên?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 0},
+    {img: "giap", name: "Ai là người chơi game đâu tiên?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 0},
+    {img: "aochoang", name: "Ai là người chơi game đâu tiên?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 0},
   ]
 
   randomGenerator.prototype = {
@@ -288,10 +293,10 @@ $('document').ready(function(){
 
   function insertQuestion(newArr, r){
     var elementArr = newArr[r.get()];
-    qtimg.children().attr({'src': pathImg + elementArr.img + imgJpg});
+    qtimg.children('.zkquesimg').css({'background-image': 'url(' + pathImg + elementArr.img + imgJpg + ')'});
     qtname.text(elementArr.name).attr({'data-star': elementArr.star});
-    qtleft.children().text(elementArr.anleft + elementArr.left).attr({'data-answer': elementArr.anleft});
-    qtright.children().text(elementArr.anright + elementArr.right).attr({'data-answer': elementArr.anright});
+    qtleft.children().text(elementArr.left).attr({'data-answer': elementArr.anleft});
+    qtright.children().text(elementArr.right).attr({'data-answer': elementArr.anright});
   };
 
   function redirectPages(page,effect){

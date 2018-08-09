@@ -479,7 +479,7 @@ iframe {
   transform: translate(-50%, -50%);
   max-width: 100%;
 }
-.qtimg {
+/*.qtimg {
   height: 250px;
   border: 1px solid #333;
   padding: 5px;
@@ -490,13 +490,13 @@ iframe {
   display: block;
   height: 100%;
   margin: auto;
-}
+}*/
 .qttime {
   height: 5px;
   width: 100%;
   background: #f00;
 }
-.qtname {
+/*.qtname {
   text-align: center;
   padding: 5px 15px;
   line-height: 22px;
@@ -511,7 +511,7 @@ iframe {
   color: #fff;
   letter-spacing: 1.5px;
   text-shadow: 2px 2px 8px #000;
-}
+}*/
 .qtresult {
   overflow: hidden;
 }
@@ -540,7 +540,7 @@ iframe {
 .zkbrd01 { border: 1px solid #a15217; border-radius: 14px; margin: 20px 0; }
 .zkbrd02 { border: 3px solid #fc7a02; border-radius: 13px; }
 .zkbrd03{ border: 2px solid #a15217; padding: 3px; border-radius: 10px; background: #ffd7a3; }
-.zkbrd04 { border: 2px dashed #c58a5e; border-radius: 5px; position: relative; padding: 35px 0; text-align: center; }
+.zkbrd04 { border: 2px dashed #c58a5e; border-radius: 5px; position: relative; padding: 35px 10px; text-align: center; }
 .zkpanel-free01 { border-radius: 10px; background: #ffd7a3; padding: 4px; border: 1px solid #a15217; }
 .zkpanel-free02 { border-radius: 6px; padding: 3px; border: 1px dashed #c58a5e; text-align: center; }
 .zktitle {
@@ -563,9 +563,9 @@ iframe {
   box-shadow: 0 2px 0 #ceae85;
   position: relative;
 }
-.zkpanel { border-radius: 10px; background: #eabd7c; margin: 15px 10px; text-align: center; color: #854112; font-style: italic; line-height: 28px; padding: 8px 0; }
+.zkpanel { border-radius: 10px; background: #eabd7c; margin: 15px 0; text-align: center; color: #854112; font-style: italic; line-height: 28px; padding: 8px 0; }
 .zkpanel .zkpanel-span { font-weight: bold; font-size: 110%; }
-.zkhr { border-bottom: 2px dashed #c58a5e; margin: 15px 10px; }
+.zkhr { border-bottom: 2px dashed #c58a5e; margin: 15px 0; }
 .zkmt0 { margin-top: 0 !important; }
 .zkmb0 { margin-bottom: 0 !important; }
 .zkcol > div { display: inline-block; vertical-align: top; }
@@ -631,3 +631,39 @@ iframe {
   -moz-transform: rotate(-10deg);
   -ms-transform: rotate(-10deg);
 }
+.qtimg {
+  position: relative;
+  height: 220px;
+}
+.qtimg .zkquesimg {
+  border-radius: 5px;
+  height: 100%;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  -webkit-filter: blur(6px);
+  -moz-filter: blur(6px);
+  -o-filter: blur(6px);
+  -ms-filter: blur(6px);
+  filter: blur(6px);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.qtname {
+  text-align: center;
+  padding: 5px 15px;
+  line-height: 44px;
+  font-size: 36px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  transform: translateY(-50%);
+  color: #fff;
+  letter-spacing: 0.5px;
+  text-shadow: 2px 2px 0 #333;
+}
+#main .qthighscore { color: #fff; }
