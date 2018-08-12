@@ -4,6 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
   <title>Thách Đấu Cùng Zuka</title>
+  <meta property="og:url"           content="https://www.your-domain.com/your-page.html" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="Your Website Title" />
+  <meta property="og:description"   content="Your description" />
+  <meta property="og:image"         content="https://www.your-domain.com/path/image.jpg" />
   <link rel="stylesheet" href="shared/css/jquery.mobile-1.4.5.min.css">
   <link rel="stylesheet" href="shared/css/animate.css">
   <link rel="stylesheet" href="shared/css/main.css">
@@ -12,7 +17,16 @@
   <script type="text/javascript" src="shared/js/jquery.animateNumber.min.js"></script>
   <script type="text/javascript" src="shared/js/main.js"></script>
 </head>
-<body>
+<body id="deviceready">
+  <!-- Load Facebook SDK for JavaScript -->
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
 
   <div class="result-panel"><img src="#" alt=""></div>
 
@@ -21,15 +35,22 @@
     <div role="main" class="ui-content">
       <div class="zkbrd01"><div class="zkbrd02"><div class="zkbrd03"><div class="zkbrd04">
         <div class="zktitle"><span>Hạng Cao Nhất</span></div>
-        <div class="qtrank"><span>chưa có</span></div>
-        <div class="qthighscore">_ <span>0</span> điểm _</div>
+        <div class="zkfs-small">
+          <div class="qtrank zkfw-strong"><span>#</span></div>
+          <div class="qthighscore">_ <span>1</span> điểm _</div>
+        </div>
         <div class="qtrankimg"><img src="#" alt="#"></div>
+        <!-- Your share button code -->
+        <div class="fb-share-button" 
+          data-href="https://www.your-domain.com/your-page.html" 
+          data-layout="button_count">
+        </div>
         <div class="btn-start zkbtn"><span>Bắt Đầu Nào!</span></div>
       </div></div></div></div>
       <div class="zkpanel-free01">
         <div class="zkpanel-free02">
           <div class="zkbtn-circle">
-            <a href="#firstpage"><span>&nbsp;</span></a><a href="#rank"><span>&nbsp;</span></a><a href="#info"><span>&nbsp;</span></a>
+            <a href="#rank"><span>&nbsp;</span></a><a href="#info"><span>&nbsp;</span></a><a href="#bgmusic"><span>&nbsp;</span></a>
           </div>
         </div>
       </div>
@@ -39,22 +60,24 @@
   <!-- Start of first page: #main -->
   <div data-role="page" id="main">
     <div role="main" class="ui-content">
-      <div class="qthighscore">Điểm cao: <span>0</span> điểm</div>
-      <div class="qtscore"><span>#</span></div>
-      <div id="progressBar">
-        <div></div>
-      </div>
-      <div class="zkbrd01"><div class="zkbrd02"><div class="zkbrd03">
+      <div class="zkbrd01 zkmb0"><div class="zkbrd02"><div class="zkbrd03">
+        <div class="zktitle zkscore"><span><div class="qtscore"><span>#</span></div></span></div>
+        <div class="qthighscore">Điểm cao: <span>0</span></div>
+        <div class="qtstar"><img src="shared/img/common/icon_star.gif" alt=""></div>
+        <div class="zkbrd01 zkprogress"><div class="zkbrd02"><div class="zkbrd03">
+          <div id="progressBar">
+            <div></div>
+          </div>
+        </div></div></div>
         <div class="qtimg">
           <div class="zkquesimg"></div>
           <div class="qtname">#</div>
         </div>
       </div></div></div>
-      <div class="qtresult">
-        <div class="btn-answer qtleft"><span>#</span></div>
-        <div class="btn-answer qtright"><span>#</span></div>
+      <div class="qtresult zkresult">
+        <div class="btn-answer qtleft"><div class="zkbrd01"><div class="zkbrd02"><div class="zkbrd03"><div class="zkbrd04"><span>Đúng ời</span></div></div></div></div></div>
+        <div class="btn-answer qtright"><div class="zkbrd01"><div class="zkbrd02"><div class="zkbrd03"><div class="zkbrd04"><span>Sai ời</span></div></div></div></div></div>
       </div>
-      <div class="qtstar"><img src="shared/img/common/icon_star.gif" alt=""></div>
     </div><!-- /content -->
   </div><!-- /page main -->
 
@@ -63,12 +86,12 @@
     <div role="main" class="ui-content">
       <div class="zkbrd01"><div class="zkbrd02"><div class="zkbrd03"><div class="zkbrd04">
         <div class="zktitle qtnotify"><span>#</span></div>
-        <div class="zkpanel zkmt0">
+        <div class="zkpanel zkmtb0">
           <div class="qtnewscore">Ván vừa rồi<br><span class="zkpanel-span">0</span> điểm</div>
           <div class="qthighscorestage">Điểm cao mới<br><span class="zkpanel-span">0</span> điểm</div>
         </div>
         <div class="zkhr"></div>
-        <div class="zkpanel zkmb0">
+        <div class="zkpanel zkmtb0">
           <div class="qtrankwrap">
             <div><span class="zkpanel-span">Hạng Cao Nhất</span></div>
             <div class="zkcol zkfs-small">
@@ -83,7 +106,7 @@
       <div class="zkpanel-free01">
         <div class="zkpanel-free02">
           <div class="zkbtn-circle">
-            <a href="#firstpage"><span>&nbsp;</span></a><a href="#rank"><span>&nbsp;</span></a><a href="#info"><span>&nbsp;</span></a>
+            <a href="#firstpage"><span>&nbsp;</span></a><a href="#rank"><span>&nbsp;</span></a><a href="#info"><span>&nbsp;</span></a><a href="#bgmusic"><span>&nbsp;</span></a>
           </div>
         </div>
       </div>
@@ -91,5 +114,6 @@
   </div><!-- /page main -->
 
   <!-- <script type="text/javascript" src="cordova.js"></script> -->
+  <script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>

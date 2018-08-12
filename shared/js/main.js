@@ -9,7 +9,7 @@ $('document').ready(function(){
   pathImg = 'shared/img/question/';
   imgJpg = '.jpg';
   var soundShared = 'shared/sound/';
-  var uiBtn = $('.ui-btn, .ui-btn-left, .ui-btn-right, .lvg_class');
+  var uiBtn = $('.ui-btn, .ui-btn-left, .ui-btn-right, .lvg_class, .zkbtn span, .zkbtn-circle a');
   var qtstar = $('.qtstar');
   var qtnotify = $('.qtnotify');
   var progessBar = $('#progressBar');
@@ -25,11 +25,12 @@ $('document').ready(function(){
   var totalScore = 0;
   var txtWrong = 'Sai mất rồi!';
   var txtTimeup = 'Hết giờ rồi!';
+  var btnAnswer = $('.btn-answer');
 
   var storage = window.localStorage;
 
   //reset score
-  // storage.setItem("totalScore", 0);
+  storage.setItem("totalScore", 1);
 
   /* Show Rank */
   getRank();
@@ -42,20 +43,20 @@ $('document').ready(function(){
   qthighscore.children().text(currentScore);
 
   var quesStack = [
-    {img: "alice", name: "Alice là một pháp sư?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 0},
-    {img: "alice4", name: "Alice là một trợ thủ?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 1},
-    {img: "mina", name: "Chiêu cuối Alice có câm lặng?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 0},
-    {img: "mina4", name: "Liliana là một pháp sư?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 1},
-    {img: "butter", name: "Liliana có hai dạng biến hình?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 1},
-    {img: "butter4", name: "Thương Long có hút máu?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 1},
-    {img: "krixi", name: "Kiếm điện luôn kích hoạt giặt điện?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 0},
-    {img: "krixi4", name: "Kinh Kong giúp tăng tốc chạy?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 1},
-    {img: "slimz", name: "Ai là người chơi game đâu tiên?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 0},
-    {img: "slimz4", name: "Ai là người chơi game đâu tiên?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 0},
-    {img: "tocbien", name: "Ai là người chơi game đâu tiên?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 0},
-    {img: "bocpha", name: "Ai là người chơi game đâu tiên?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 0},
-    {img: "giap", name: "Ai là người chơi game đâu tiên?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 0},
-    {img: "aochoang", name: "Ai là người chơi game đâu tiên?", left: "Đúng ời", right: "Sai ời", anleft: 1, anright: 0, star: 0},
+    {img: "alice", name: "Alice là một pháp sư?", anleft: 1, anright: 0, star: 0},
+    {img: "alice4", name: "Alice là một trợ thủ?", anleft: 1, anright: 0, star: 1},
+    {img: "mina", name: "Chiêu cuối Alice có câm lặng?", anleft: 1, anright: 0, star: 0},
+    {img: "mina4", name: "Liliana là một pháp sư?", anleft: 1, anright: 0, star: 1},
+    {img: "butter", name: "Liliana có hai dạng biến hình?", anleft: 1, anright: 0, star: 1},
+    {img: "butter4", name: "Thương Long có hút máu?", anleft: 1, anright: 0, star: 1},
+    {img: "krixi", name: "Kiếm điện luôn kích hoạt giặt điện?", anleft: 1, anright: 0, star: 0},
+    {img: "krixi4", name: "Kinh Kong giúp tăng tốc chạy?", anleft: 1, anright: 0, star: 1},
+    {img: "slimz", name: "Ai là người chơi game đâu tiên?", anleft: 1, anright: 0, star: 0},
+    {img: "slimz4", name: "Ai là người chơi game đâu tiên?", anleft: 1, anright: 0, star: 0},
+    {img: "tocbien", name: "Ai là người chơi game đâu tiên?", anleft: 1, anright: 0, star: 0},
+    {img: "bocpha", name: "Ai là người chơi game đâu tiên?", anleft: 1, anright: 0, star: 0},
+    {img: "giap", name: "Ai là người chơi game đâu tiên?", anleft: 1, anright: 0, star: 0},
+    {img: "aochoang", name: "Ai là người chơi game đâu tiên?", anleft: 1, anright: 0, star: 0},
   ]
 
   randomGenerator.prototype = {
@@ -78,7 +79,7 @@ $('document').ready(function(){
 
   var r = new randomGenerator(0, randomMax);
 
-  $('.btn-answer').click(function() {
+  btnAnswer.click(function() {
     var answerSelect = $(this).children().attr('data-answer');
     clearTimeout(progDelay);
     if(answerSelect != 0){
@@ -125,71 +126,70 @@ $('document').ready(function(){
     var qtrank = $('.qtrank');
     var qtrankimg = $('.qtrankimg');
     var rankArray = [
-      {id: 'chuaco', name: 'chưa có', img: ''},
-      {id: 'dong3', name: 'Đồng 3', img: 'shared/img/common/icon_dong.png'},
-      {id: 'dong2', name: 'Đồng 2', img: 'shared/img/common/icon_dong.png'},
-      {id: 'dong1', name: 'Đồng 1', img: 'shared/img/common/icon_dong.png'},
-      {id: 'bac3', name: 'Bạc 3', img: 'shared/img/common/icon_bac.png'},
-      {id: 'bac2', name: 'Bạc 2', img: 'shared/img/common/icon_bac.png'},
-      {id: 'bac1', name: 'Bạc 1', img: 'shared/img/common/icon_bac.png'},
-      {id: 'vang4', name: 'Vàng 4', img: 'shared/img/common/icon_vang.png'},
-      {id: 'vang3', name: 'Vàng 3', img: 'shared/img/common/icon_vang.png'},
-      {id: 'vang2', name: 'Vàng 2', img: 'shared/img/common/icon_vang.png'},
-      {id: 'vang1', name: 'Vàng 1', img: 'shared/img/common/icon_vang.png'},
-      {id: 'bk5', name: 'Bạch Kim 5', img: 'shared/img/common/icon_bk.png'},
-      {id: 'bk4', name: 'Bạch Kim 4', img: 'shared/img/common/icon_bk.png'},
-      {id: 'bk3', name: 'Bạch Kim 3', img: 'shared/img/common/icon_bk.png'},
-      {id: 'bk2', name: 'Bạch Kim 2', img: 'shared/img/common/icon_bk.png'},
-      {id: 'bk1', name: 'Bạch Kim 1', img: 'shared/img/common/icon_bk.png'},
-      {id: 'kc5', name: 'Kim Cương 5', img: 'shared/img/common/icon_kc.png'},
-      {id: 'kc4', name: 'Kim Cương 4', img: 'shared/img/common/icon_kc.png'},
-      {id: 'kc3', name: 'Kim Cương 3', img: 'shared/img/common/icon_kc.png'},
-      {id: 'kc2', name: 'Kim Cương 2', img: 'shared/img/common/icon_kc.png'},
-      {id: 'kc1', name: 'Kim Cương 1', img: 'shared/img/common/icon_kc.png'},
-      {id: 'ct', name: 'Cao Thủ', img: 'shared/img/common/icon_ct.png'},
+      {id: 'go3', name: 'Gỗ 3', img: 'shared/img/common/rank_go.png'},
+      {id: 'go2', name: 'Gỗ 2', img: 'shared/img/common/rank_go.png'},
+      {id: 'go1', name: 'Gỗ 1', img: 'shared/img/common/rank_go.png'},
+      {id: 'sat3', name: 'Sắt 3', img: 'shared/img/common/rank_sat.png'},
+      {id: 'sat2', name: 'Sắt 2', img: 'shared/img/common/rank_sat.png'},
+      {id: 'sat1', name: 'Sắt 1', img: 'shared/img/common/rank_sat.png'},
+      {id: 'dong3', name: 'Đồng 3', img: 'shared/img/common/rank_dong.png'},
+      {id: 'dong2', name: 'Đồng 2', img: 'shared/img/common/rank_dong.png'},
+      {id: 'dong1', name: 'Đồng 1', img: 'shared/img/common/rank_dong.png'},
+      {id: 'bac3', name: 'Bạc 3', img: 'shared/img/common/rank_bac.png'},
+      {id: 'bac2', name: 'Bạc 2', img: 'shared/img/common/rank_bac.png'},
+      {id: 'bac1', name: 'Bạc 1', img: 'shared/img/common/rank_bac.png'},
+      {id: 'vang4', name: 'Vàng 4', img: 'shared/img/common/rank_vang.png'},
+      {id: 'vang3', name: 'Vàng 3', img: 'shared/img/common/rank_vang.png'},
+      {id: 'vang2', name: 'Vàng 2', img: 'shared/img/common/rank_vang.png'},
+      {id: 'vang1', name: 'Vàng 1', img: 'shared/img/common/rank_vang.png'},
+      {id: 'ruby4', name: 'Ruby 4', img: 'shared/img/common/rank_ruby.png'},
+      {id: 'ruby3', name: 'Ruby 3', img: 'shared/img/common/rank_ruby.png'},
+      {id: 'ruby2', name: 'Ruby 2', img: 'shared/img/common/rank_ruby.png'},
+      {id: 'ruby1', name: 'Ruby 1', img: 'shared/img/common/rank_ruby.png'},
+      {id: 'kc', name: 'Kim Cương', img: 'shared/img/common/rank_kc.png'},
     ];
-    if(rankScore > 0) {
-      qtrankimg.show();
-    }else{
-      qtrankimg.hide();
-    }
+    // if(rankScore > 0) {
+    //   qtrankimg.show();
+    // }else{
+    //   qtrankimg.hide();
+    // }
 
     switch(true){
-      case rankScore <= 0: element = 'chuaco'; break;
-      case rankScore <= 50: element = 'dong3'; break;
-      case rankScore <= 100: element = 'dong2'; break;
-      case rankScore <= 150: element = 'dong1'; break;
-      case rankScore <= 200: element = 'bac3'; break;
-      case rankScore <= 250: element = 'bac2'; break;
-      case rankScore <= 300: element = 'bac1'; break;
-      case rankScore <= 350: element = 'vang4'; break;
-      case rankScore <= 400: element = 'vang3'; break;
-      case rankScore <= 450: element = 'vang2'; break;
-      case rankScore <= 500: element = 'vang1'; break;
-      case rankScore <= 550: element = 'bk5'; break;
-      case rankScore <= 600: element = 'bk4'; break;
-      case rankScore <= 650: element = 'bk3'; break;
-      case rankScore <= 700: element = 'bk2'; break;
-      case rankScore <= 750: element = 'bk1'; break;
-      case rankScore <= 800: element = 'kc5'; break;
-      case rankScore <= 850: element = 'kc4'; break;
-      case rankScore <= 900: element = 'kc3'; break;
-      case rankScore <= 950: element = 'kc2'; break;
-      case rankScore <= 1000: element = 'kc1'; break;
-      case rankScore <= 1050: element = 'ct'; break;
-      default: element = 'ct1'; break;
+      // case rankScore <= 0: element = 'chuaco'; break;
+      case rankScore <= 50: element = 'go3'; break;
+      case rankScore <= 100: element = 'go2'; break;
+      case rankScore <= 150: element = 'go1'; break;
+      case rankScore <= 200: element = 'sat3'; break;
+      case rankScore <= 250: element = 'sat2'; break;
+      case rankScore <= 300: element = 'sat1'; break;
+      case rankScore <= 350: element = 'dong3'; break;
+      case rankScore <= 400: element = 'dong2'; break;
+      case rankScore <= 450: element = 'dong1'; break;
+      case rankScore <= 500: element = 'bac3'; break;
+      case rankScore <= 550: element = 'bac2'; break;
+      case rankScore <= 600: element = 'bac1'; break;
+      case rankScore <= 650: element = 'vang4'; break;
+      case rankScore <= 700: element = 'vang3'; break;
+      case rankScore <= 750: element = 'vang2'; break;
+      case rankScore <= 800: element = 'vang1'; break;
+      case rankScore <= 850: element = 'ruby4'; break;
+      case rankScore <= 900: element = 'ruby3'; break;
+      case rankScore <= 950: element = 'ruby2'; break;
+      case rankScore <= 1000: element = 'ruby1'; break;
+      case rankScore <= 1050: element = 'kc'; break;
+      default: element = 'kc1'; break;
     }
 
-    if(element == 'ct1'){
+    if(element == 'kc1'){
       var valRank = parseInt(((rankScore - 1000) / 100), 10);
       var rankCT;
       if(valRank >= 1){
-        rankCT = 'Cao Thủ ' + valRank;
+        rankCT = 'Kim Cương ' + valRank;
       }else{
-        rankCT = 'Cao Thủ';
+        rankCT = 'Kim Cương';
       }
       qtrank.children().text(rankCT);
-      qtrankimg.children().attr('src', 'shared/img/common/icon_ct.png');
+      qtrankimg.children().attr('src', 'shared/img/common/rank_kc.png');
     }else{
       for(var i = 0; i<rankArray.length; i++){
         if(rankArray[i].id == element){
@@ -278,9 +278,18 @@ $('document').ready(function(){
         progressTime(timeleft - 1, timetotal, $element);
       }, 1000);
     }else{
+      btnDisOrNot(btnAnswer,1);
       getTimeup();
     }
-  }  
+  }
+
+  function btnDisOrNot(btn,stt) {
+    if(stt == 1){
+      btn.addClass('disable');
+    }else{
+      btn.removeClass('disable');
+    }
+  }
 
   function effectPages(object,type,time){
     clearTimeout(timeDelay);
@@ -292,11 +301,12 @@ $('document').ready(function(){
   }
 
   function insertQuestion(newArr, r){
+    btnDisOrNot(btnAnswer, 0);
     var elementArr = newArr[r.get()];
     qtimg.children('.zkquesimg').css({'background-image': 'url(' + pathImg + elementArr.img + imgJpg + ')'});
     qtname.text(elementArr.name).attr({'data-star': elementArr.star});
-    qtleft.children().text(elementArr.left).attr({'data-answer': elementArr.anleft});
-    qtright.children().text(elementArr.right).attr({'data-answer': elementArr.anright});
+    qtleft.children().attr({'data-answer': elementArr.anleft});
+    qtright.children().attr({'data-answer': elementArr.anright});
   };
 
   function redirectPages(page,effect){
@@ -318,18 +328,39 @@ $('document').ready(function(){
   }
 
   /* Main click */
-  // var click01 = soundShared + 'click01.wav';
-  var click02 = soundShared + 'click02.ogg';
+  var click03 = soundShared + 'click03.wav';
   var clickTrue = soundShared + 'true.mp3';
   var clickFalse = soundShared + 'false.mp3';
   var clickTimeup = soundShared + 'timeup.mp3';
+  var bgMusic = soundShared + 'bg.mp3';
   var typeOgg = 'audio/ogg';
   var typeWav = 'audio/wav';
   var typeMpeg = 'audio/mpeg';
-  body.append('<audio id="main_click" src="'+ click02 +'" type="'+ typeOgg +'"></audio>');
+  body.append('<audio id="main_click" src="'+ click03 +'" type="'+ typeWav +'"></audio>');
   body.append('<audio id="true_click" src="'+ clickTrue +'" type="'+ typeMpeg +'"></audio>');
   body.append('<audio id="false_click" src="'+ clickFalse +'" type="'+ typeMpeg +'"></audio>');
   body.append('<audio id="timeup_click" src="'+ clickTimeup +'" type="'+ typeMpeg +'"></audio>');
+
+  var bgmusicStore = storage.getItem('bgmusic');
+  if(bgmusicStore === 'true'){
+    body.append('<audio id="bg_music_click" src="'+ bgMusic +'" type="'+ typeMpeg +'" loop></audio>');
+    $('a[href*="bgmusic"]').addClass('active');
+  }else{
+    body.append('<audio id="bg_music_click" src="'+ bgMusic +'" type="'+ typeMpeg +'" loop autoplay></audio>');
+  }
+
+  $('a[href*="bgmusic"]').click(function(){
+    if($(this).hasClass('active')){
+      $('a[href*="bgmusic"]').removeClass('active');
+      $('#bg_music_click').get(0).play();
+      storage.setItem('bgmusic', 'false');
+    }else{
+      $('a[href*="bgmusic"]').addClass('active');
+      $('#bg_music_click').get(0).pause();
+      storage.setItem('bgmusic', 'true');
+    }
+  });
+
   uiBtn.on('click', function(){
     soundRun('main_click');
   });
