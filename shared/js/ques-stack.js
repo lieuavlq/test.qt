@@ -1,0 +1,16 @@
+var ques_stack_vn = [
+{img: "alice", name: "Alice là một pháp sư?", anleft: 1, anright: 0, star: 0},
+{img: "alice4", name: "Alice là một trợ thủ?", anleft: 1, anright: 0, star: 1},
+{img: "mina", name: "Chiêu cuối Alice có câm lặng?", anleft: 1, anright: 0, star: 0},
+{img: "mina4", name: "Liliana là một pháp sư?", anleft: 1, anright: 0, star: 1},
+{img: "butter", name: "Liliana có hai dạng biến hình?", anleft: 1, anright: 0, star: 1},
+{img: "butter4", name: "Thương Long có hút máu?", anleft: 1, anright: 0, star: 1},
+{img: "krixi", name: "Kiếm điện luôn kích hoạt giặt điện?", anleft: 1, anright: 0, star: 0},
+{img: "krixi4", name: "Kinh Kong giúp tăng tốc chạy?", anleft: 1, anright: 0, star: 1},
+{img: "slimz", name: "Ai là người chơi game đâu tiên?", anleft: 1, anright: 0, star: 0},
+{img: "slimz4", name: "Ai là người chơi game đâu tiên?", anleft: 1, anright: 0, star: 0},
+{img: "tocbien", name: "Ai là người chơi game đâu tiên?", anleft: 1, anright: 0, star: 0},
+{img: "bocpha", name: "Ai là người chơi game đâu tiên?", anleft: 1, anright: 0, star: 0},
+{img: "giap", name: "Ai là người chơi game đâu tiên?", anleft: 1, anright: 0, star: 0},
+{img: "aochoang", name: "Ai là người chơi game đâu tiên?", anleft: 1, anright: 0, star: 0},
+];
