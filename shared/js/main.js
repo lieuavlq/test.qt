@@ -19,17 +19,17 @@ $('document').ready(function(){
   var gameFailed = 'shared/img/common/failed.gif';
   var gameStart = 'shared/img/common/start.gif';
   var gameTimeup = 'shared/img/common/timeup.gif';
-  var totalTime = 3; //time for progress bar
-  var randomMax = 8; //maximum show question
   var totalScore = 0;
   var txtWrong = 'Sai mất rồi!';
   var txtTimeup = 'Hết giờ rồi!';
   var btnAnswer = $('.btn-answer');
   var storage = window.localStorage;
   var quesStack = ques_stack_vn;
+  var totalTime = 3; //time for progress bar
+  var randomMax = quesStack.length - 1; //maximum show question
 
   //reset score
-  storage.setItem("totalScore", "");
+  // storage.setItem("totalScore", 1);
 
   /* Show Rank */
   getRank();
