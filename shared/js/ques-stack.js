@@ -44,4 +44,9 @@ var ques_stack_vn = [
 {img: "mganga1", name: "Mganga đánh tay ko cộng dồn Ấn Tà Thuật?", anleft: 0, anright: 1, star: 1},
 {img: "mganga2", name: "Độc Khí của Mganga có 2 điểm tích lũy?", anleft: 1, anright: 0, star: 1},
 {img: "mganga3", name: "Trượng của Mganga Tiệc Bánh Kẹo là cây kem?", anleft: 0, anright: 1, star: 0},
+{img: "trieuvan1", name: "Triệu Vân là một sát thủ?", anleft: 0, anright: 1, star: 0},
+{img: "trieuvan2", name: "Long Huyết tăng tốc chạy cho Triệu Vân?", anleft: 1, anright: 0, star: 1},
+{img: "trieuvan5", name: "Long Hống tăng tốc đánh cho Triệu Vân?", anleft: 1, anright: 0, star: 1},
+{img: "trieuvan3", name: "Triệu Vân Quang Vinh thưởng hạng S3?", anleft: 0, anright: 1, star: 0},
+{img: "trieuvan4", name: "Triệu Vân Dũng Sĩ Đồ Long mở tại AIC 2018?", anleft: 0, anright: 1, star: 0},
 ];
