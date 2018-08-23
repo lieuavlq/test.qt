@@ -195,7 +195,7 @@ $('document').ready(function(){
   function getTimeup(){
     soundRun('timeup_click');
     effectPages(function(){
-      getHighscore();
+      getHighscore('timeup');
       getNotify(txtTimeup);
       getRank();
       redirectPages('#restart', 'none');
@@ -206,20 +206,34 @@ $('document').ready(function(){
     qtnotify.children().text($text);
   }
 
-  function getHighscore(){
+  function getHighscore(zkimgcheck){
     var qtcurrentscore = qtscore.children().text();
     var pointRound = parseInt(qtcurrentscore,10);
     var oldHighscore = storage.getItem("totalScore");
     var qthighscorestage = $('.qthighscorestage');
+    var zkimg02 = $('.zkimg02');
+    clearTimeout(time);
+    zkimg02.addClass('animated tada').hide();
+    var time = setTimeout(function(){
+      zkimg02.removeClass('tada').addClass('infinite pulse');
+    },2000);
     
     if(pointRound > oldHighscore){
       storage.setItem("totalScore", pointRound);
       qthighscore.children().text(storage.getItem("totalScore"));
       qthighscorestage.show().children().text(qtcurrentscore);
       qtnewscore.hide();
+      zkimg02.show().children('img').attr('src', 'shared/img/common/zuka02.png');
+      zkimg02.children('span').html('Dze!! Có tiến bộ rùi<br>Cố lên nửa nào!!');
     }else{
       qthighscorestage.hide();
       qtnewscore.show().children().text(qtcurrentscore);
+      zkimg02.show().children('img').attr('src', 'shared/img/common/zuka03.png');
+      if(zkimgcheck == 'timeup'){
+        zkimg02.children('span').html('Hết giờ rùi tiếc quá!!<br>Chơi lại cái nà!!');
+      }else{
+        zkimg02.children('span').html('Ôi!! Sai mất rồi!!<br>Chơi lại nào!!');
+      }
     }
   }
 

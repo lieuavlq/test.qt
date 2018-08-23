@@ -449,6 +449,7 @@ iframe {
 .zkpanel .zkpanel-span { font-weight: bold; font-size: 110%; }
 .zkhr { border-bottom: 2px dashed #c58a5e; margin: 10px 0; }
 .zkmt0 { margin-top: 0 !important; }
+.zkmt10 { margin-top: 10px !important; }
 .zkmb0 { margin-bottom: 0 !important; }
 .zkmtb0 { margin: 0 auto !important; }
 .zkcol > div { display: inline-block; vertical-align: top; }
@@ -662,4 +663,27 @@ iframe {
   .qtimg {
     height: 210px;
   }
+}
+
+[class*="zkimg0"] {
+margin: 0;
+position: relative;
+}
+.zkimg01 img {
+max-width: 175px;
+}
+.zkimg01 span {
+position: absolute;
+font-size: 15px;
+line-height: 20px;
+left: 10px;
+top: 10px;
+}
+.zkimg02 {
+display: none;
+font-size: 18px;
+line-height: 24px;
+}
+.zkimg02 img {
+max-width: 280px;
 }
