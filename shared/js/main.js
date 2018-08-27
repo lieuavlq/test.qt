@@ -8,7 +8,7 @@ $('document').ready(function(){
   var pathImg = 'shared/img/question/';
   var imgJpg = '.jpg';
   var soundShared = 'shared/sound/';
-  var uiBtn = $('.ui-btn, .ui-btn-left, .ui-btn-right, .lvg_class, .zkbtn span, .zkbtn-circle a');
+  var uiBtn = $('.ui-btn, .ui-btn-left, .ui-btn-right, .lvg_class, .zkbtn span, .zkbtn-circle a, .zkbtn-sound');
   var qtstar = $('.qtstar');
   var qtnotify = $('.qtnotify');
   var progessBar = $('#progressBar');
@@ -27,12 +27,73 @@ $('document').ready(function(){
   var quesStack = ques_stack_vn;
   var totalTime = 3; //time for progress bar
   var randomMax = quesStack.length - 1; //maximum show question
+  var qtHeart = $('.qtheart');
+  var zkHeartCount = $('.zkheartcount');
 
   //reset score
   // storage.setItem("totalScore", 1);
+  // storage.setItem('firstscreen', '');
+  storage.setItem('zkheart', 1);
 
   /* Show Rank */
   getRank();
+
+  /* First Screen */
+  var zkHeart = storage.getItem('zkheart');
+  var valFirstScreen = storage.getItem('firstscreen');
+  var idFirstScreen = $('#first-screen');
+  var btnFirstScreen = $('.zkbtnfirstscreen');
+  if(valFirstScreen === null || valFirstScreen === ''){
+    idFirstScreen.show();
+  }
+  $('a[href*="#info"], .fs-style .close').click(function(){
+    idFirstScreen.css({'display': ''}).toggleClass('active');
+  });
+  btnFirstScreen.click(function(){
+    idFirstScreen.hide();
+    storage.setItem('firstscreen','1');
+    storage.setItem('zkheart', 3);
+    zkHeart = storage.getItem('zkheart');
+    qtHeart.children().text(zkHeart);
+    zkHeartCount.children('.count').text(zkHeart);
+  });
+  qtHeart.children().text(zkHeart);
+  zkHeartCount.children('.count').text(zkHeart);
+  heart_count();
+  $('a[href*="#bgheart"]').click(function(){
+    heart_count();
+  });
+
+  function heart_count(){
+    if(zkHeart <= 3){
+      zkHeartCount.children('.wrap-countzero').show();
+      var timer2 = "0:10";
+      var timer2val = 10;
+      var interval = setInterval(function() {
+        var timer = timer2.split(':');
+        var minutes = parseInt(timer[0], 10);
+        var seconds = parseInt(timer[1], 10);
+        --seconds;
+        minutes = (seconds < 0) ? --minutes : minutes;
+        if (minutes < 0) clearInterval(interval);
+        seconds = (seconds < 0) ? 59 : seconds;
+        seconds = (seconds < 10) ? '0' + seconds : seconds;
+        zkHeartCount.find('.countzero').html(minutes + ':' + seconds);
+        timer2 = minutes + ':' + seconds;
+        if(timer2val < 1){
+          zkHeart++;
+          storage.setItem('zkheart', zkHeart);
+          qtHeart.children().text(zkHeart);
+          zkHeartCount.children('.count').text(zkHeart);
+          clearInterval(interval);
+          if(zkHeart > 3){
+            zkHeartCount.children('.wrap-countzero').hide();
+          }
+        }
+        timer2val--;
+      }, 1000);
+    }
+  }
 
   /* Show High Score */
   var currentScore = storage.getItem("totalScore");
@@ -74,15 +135,113 @@ $('document').ready(function(){
         progressTime(totalTime, totalTime, progessBar);
       },gameSuccess,1000);
     }else{
-      soundRun('false_click');
-      effectPages(function(){
-        redirectPages('#restart', 'none');
-        getHighscore();
-        getNotify(txtWrong);
-        getRank();
-      },gameFailed,2000);
+      if(zkHeart > 0){
+        $("#dialog-confirm").dialog({
+          show: {effect: 'fade', duration: 250},
+          hide: {effect: 'fade', duration: 150},
+          dialogClass: "zkdialogcontinue",
+          open: function() {
+            $(this).html('<p>Đang có '+ zkHeart +' <img src="shared/img/common/heart.png" alt="">, tiếp tục nào!!</p>');
+          },
+          buttons: {
+            "Tiếp tục": function () {
+              $(this).dialog('close');
+              soundRun('true_click');
+              effectPages(function(){
+                insertQuestion(quesStack,r);
+                getStar();
+                progressTime(totalTime, totalTime, progessBar);
+              },gameSuccess,1000);
+              zkHeart--;
+              qtHeart.children().text(zkHeart);
+            },
+            "Dừng lại": function () {
+              $(this).dialog('close');
+              soundRun('false_click');
+              effectPages(function(){
+                redirectPages('#restart', 'none');
+                getHighscore();
+                getNotify(txtWrong);
+                getRank();
+              },gameFailed,2000);
+              if(zkHeart <= 0){
+                storage.setItem('zkheart', 0);
+              }else{
+                storage.setItem('zkheart', zkHeart);
+              }
+            }
+          }
+        });
+      }else{
+        soundRun('false_click');
+        effectPages(function(){
+          redirectPages('#restart', 'none');
+          getHighscore();
+          getNotify(txtWrong);
+          getRank();
+        },gameFailed,2000);
+        if(zkHeart <= 0){
+          storage.setItem('zkheart', 0);
+        }else{
+          storage.setItem('zkheart', zkHeart);
+        }
+      }
     }
   });
+
+  function getTimeup(){
+    if(zkHeart > 0){
+      $("#dialog-confirm").dialog({
+        show: {effect: 'fade', duration: 250},
+        hide: {effect: 'fade', duration: 150},
+        dialogClass: "zkdialogcontinue",
+        open: function() {
+          $(this).html('<p>Đang có '+ zkHeart +' <img src="shared/img/common/heart.png" alt="">, tiếp tục nào!!</p>');
+        },
+        buttons: {
+          "Tiếp tục": function () {
+            $(this).dialog('close');
+            soundRun('true_click');
+            effectPages(function(){
+              insertQuestion(quesStack,r);
+              getStar();
+              progressTime(totalTime, totalTime, progessBar);
+            },gameSuccess,1000);
+            zkHeart--;
+            qtHeart.children().text(zkHeart);
+          },
+          "Dừng lại": function () {
+            $(this).dialog('close');
+            soundRun('timeup_click');
+            effectPages(function(){
+              getHighscore('timeup');
+              getNotify(txtTimeup);
+              getRank();
+              redirectPages('#restart', 'none');
+            },gameTimeup,2000);
+            if(zkHeart <= 0){
+              storage.setItem('zkheart', 0);
+            }else{
+              storage.setItem('zkheart', zkHeart);
+            }
+          }
+        }
+      });
+    }else{
+      soundRun('timeup_click');
+      effectPages(function(){
+        getHighscore('timeup');
+        getNotify(txtTimeup);
+        getRank();
+        redirectPages('#restart', 'none');
+      },gameTimeup,2000);
+      if(zkHeart <= 0){
+        storage.setItem('zkheart', 0);
+      }else{
+        storage.setItem('zkheart', zkHeart);
+      }
+    }
+  }
 
   $('.btn-start').click(function() {
     effectPages(function(){
@@ -192,16 +351,6 @@ $('document').ready(function(){
     return qtname.attr('data-star');
   }
 
-  function getTimeup(){
-    soundRun('timeup_click');
-    effectPages(function(){
-      getHighscore('timeup');
-      getNotify(txtTimeup);
-      getRank();
-      redirectPages('#restart', 'none');
-    },gameTimeup,2000);
-  }
-
   function getNotify($text){
     qtnotify.children().text($text);
   }
@@ -212,11 +361,12 @@ $('document').ready(function(){
     var oldHighscore = storage.getItem("totalScore");
     var qthighscorestage = $('.qthighscorestage');
     var zkimg02 = $('.zkimg02');
+    zkimg02.removeClass('animated tada infinite pulse');
     clearTimeout(time);
     zkimg02.addClass('animated tada').hide();
     var time = setTimeout(function(){
       zkimg02.removeClass('tada').addClass('infinite pulse');
-    },2000);
+    },1000);
     
     if(pointRound > oldHighscore){
       storage.setItem("totalScore", pointRound);

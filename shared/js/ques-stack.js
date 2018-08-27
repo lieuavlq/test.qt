@@ -14,7 +14,7 @@ var ques_stack_vn = [
 {img: "veera2", name: "Tiểu Quỷ của Veera có tối đa 5?", anleft: 1, anright: 0, star: 1},
 {img: "veera3", name: "Hôn Gió của Veera làm choáng mục tiêu?", anleft: 1, anright: 0, star: 0},
 {img: "veera4", name: "Cánh của Veera Nàng Dơi Tuyết làm từ băng giá?", anleft: 1, anright: 0, star: 0},
-{img: "veera5", name: "Trên tay Veera Y Tá Bạo Loạn cầm quả tim?", anleft: 1, anright: 0, star: 0},
+{img: "veera5", name: "Trên tay Veera Y Tá Bạo Loạn cầm quả tim?", anleft: 0, anright: 1, star: 0},
 {img: "lubo1", name: "Lữ Bố có thể mua trong cửa hàng?", anleft: 0, anright: 1, star: 0},
 {img: "lubo1", name: "Lữ Bố là một sát thủ?", anleft: 0, anright: 1, star: 0},
 {img: "lubo2", name: "Xích Thố của Lữ Bố lướt được 3 lần?", anleft: 1, anright: 0, star: 1},

@@ -347,8 +347,8 @@ iframe {
   display: block;
   width: 48px;
   position: absolute;
-  top: -5px;
-  right: -50px;
+  top: 0;
+  right: 0;
   opacity: 0;
   -webkit-transition: all .3s ease;
   transition: all .3s ease;
@@ -356,7 +356,8 @@ iframe {
   transform: rotate(-360deg);
 }
 .qtstar.active {
-  right: 10px;
+  top: -20px;
+  right: -15px;
   opacity: 1;
   -webkit-transform: rotate(0deg);
   transform: rotate(0deg);
@@ -508,6 +509,7 @@ iframe {
 .zkbtn-circle a[href*="rank"] span { background-image: url(../img/common/rank.png); }
 .zkbtn-circle a[href*="info"] span { background-image: url(../img/common/info.png); }
 .zkbtn-circle a[href*="bgmusic"] span { background-image: url(../img/common/music.png); }
+.zkbtn-circle a[href*="bgheart"] span { background-image: url(../img/common/heart.png); }
 .zkbtn-circle a:after {
   width: 12px;
   height: 7px;
@@ -599,6 +601,7 @@ iframe {
   font-style: normal;
   width: 52px;
   font-size: 22px;
+  position: relative;
 }
 .zkresult {
   overflow: hidden;
@@ -669,15 +672,23 @@ iframe {
 margin: 0;
 position: relative;
 }
+.zkimg01 {
+text-align: right;
+color: #fff;
+margin-bottom: -35px;
+padding-right: 15px;
+margin-top: -12px;
+}
 .zkimg01 img {
 max-width: 175px;
 }
 .zkimg01 span {
 position: absolute;
 font-size: 15px;
-line-height: 20px;
-left: 10px;
+line-height: 22px;
+right: 180px;
 top: 10px;
+text-align: center;
 }
 .zkimg02 {
 display: none;
@@ -685,5 +696,155 @@ font-size: 18px;
 line-height: 24px;
 }
 .zkimg02 img {
-max-width: 280px;
+max-width: 230px;
+}
+.zkmain-img {
+height: 40px;
+}
+.zkmain-img1 {
+background: url(../img/common/bgmain1.png) no-repeat center top;
+background-size: 100%;
+}
+.zkmain-img1.zi02 {
+background-image: url(../img/common/bgmain2.png);
+}
+
+@media all and (max-width: 360px){
+  .qtrankimg {
+    margin: 5px 0 0;
+  }
+  .qtrankimg img {
+    width: 160px;
+  }
+}
+
+.fs-style {
+width: 100%;
+height: 100%;
+box-sizing: border-box;
+padding: 15px;
+position: fixed;
+top: 0;
+left: 0;
+z-index: 10;
+background: #353535;
+display: none;
+}
+.fs-style.active {
+display: block;
+}
+.fs-style [class*="zkpanel-free"],
+.fs-style-inner {
+height: 100%;
+box-sizing: border-box;
+}
+.fs-style-inner {
+position: relative;
+text-align: left;
+overflow: hidden;
+padding: 10px 10px 70px;
+overflow-y: scroll;
+}
+.fs-style-inner p {
+line-height: 20px;
+margin: 5px 0;
+}
+.fs-style-inner .zkbtn {
+text-align: center;
+bottom: 35px;
+position: fixed;
+}
+.fs-style-inner img {
+vertical-align: middle;
+}
+.fs-style-inner li img {
+margin: 0 6px;
+}
+.zkalcenter {
+text-align: center;
+}
+.zkdialogcontinue {
+background-color: #f1f1f1 !important;
+}
+.zkdialogcontinue .ui-dialog-titlebar {
+display: none;
+}
+.zkdialogcontinue .ui-dialog-content {
+padding: .5em 1em;
+}
+.zkdialogcontinue .ui-dialog-buttonpane {
+text-align: center;
+margin-top: 0;
+padding: .3em 1em;
+}
+.zkdialogcontinue .ui-dialog-buttonpane .ui-dialog-buttonset {
+float: none;
+}
+.zkdialogcontinue .ui-dialog-buttonpane button {
+margin: .5em .4em;
+}
+.zkdialogcontinue img {
+vertical-align: middle;
+}
+.qtheart {
+position: absolute;
+top: 8px;
+right: 10px;
+font-size: 18px;
+color: #854112; 
+}
+.qtheart img {
+width: 24px;
+vertical-align: -6px;
+}
+.fs-style .close {
+line-height: 32px;
+width: 50px;
+text-align: center;
+cursor: pointer;
+display: none;
+position: fixed;
+top: 20px;
+right: 20px;
+font-size: 18px;
+}
+.fs-style.active .fs-style-inner {
+padding-bottom: 10px;
+}
+.fs-style.active .fs-style-inner .zkbtn {
+display: none;
+}
+.fs-style.active .close {
+display: block;
+}
+.zkcol02 {
+  overflow: hidden;
+}
+.zkcol02 > div {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+@media all and (max-width: 410px){
+  .zkcol02 > div {
+    padding: 5px;
+  }
+  .zkimgcol span {
+    font-size: 11px;
+    line-height: normal;
+    display: block;
+  }
+}
+
+.zkheartcount {
+  margin: 5px 0;
+}
+.zkheartcount img {
+  width: 24px;
+  vertical-align: -6px;
+}
+.wrap-countzero {
+  display: none;
 }
