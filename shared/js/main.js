@@ -28,18 +28,16 @@ $('document').ready(function(){
   var totalTime = 3; //time for progress bar
   var randomMax = quesStack.length - 1; //maximum show question
   var qtHeart = $('.qtheart');
-  var zkHeartCount = $('.zkheartcount');
 
   //reset score
   // storage.setItem("totalScore", 1);
   // storage.setItem('firstscreen', '');
-  storage.setItem('zkheart', 1);
+  // storage.setItem('zkheart', 1);
 
   /* Show Rank */
   getRank();
 
   /* First Screen */
-  var zkHeart = storage.getItem('zkheart');
   var valFirstScreen = storage.getItem('firstscreen');
   var idFirstScreen = $('#first-screen');
   var btnFirstScreen = $('.zkbtnfirstscreen');
@@ -49,51 +47,54 @@ $('document').ready(function(){
   $('a[href*="#info"], .fs-style .close').click(function(){
     idFirstScreen.css({'display': ''}).toggleClass('active');
   });
+
+  var zkHeart = parseInt(storage.getItem('zkheart'));
+  var zkHeartShow = $('.bgheart-show');
+  var bgheartCountdown = $('.bgheart-countdown');
+  var bgheartBtn = $('.bgheart-btn');
+  var bgheartTxt = $('.bgheart-txt');
+  var timecd_heart = '0:30';
+
   btnFirstScreen.click(function(){
     idFirstScreen.hide();
-    storage.setItem('firstscreen','1');
+    storage.setItem('firstscreen', 1);
     storage.setItem('zkheart', 3);
-    zkHeart = storage.getItem('zkheart');
-    qtHeart.children().text(zkHeart);
-    zkHeartCount.children('.count').text(zkHeart);
-  });
-  qtHeart.children().text(zkHeart);
-  zkHeartCount.children('.count').text(zkHeart);
-  heart_count();
-  $('a[href*="#bgheart"]').click(function(){
-    heart_count();
+    qtHeart.children().text('3');
+    zkHeartShow.text('3');
   });
 
-  function heart_count(){
-    if(zkHeart <= 3){
-      zkHeartCount.children('.wrap-countzero').show();
-      var timer2 = "0:10";
-      var timer2val = 10;
-      var interval = setInterval(function() {
-        var timer = timer2.split(':');
-        var minutes = parseInt(timer[0], 10);
-        var seconds = parseInt(timer[1], 10);
-        --seconds;
-        minutes = (seconds < 0) ? --minutes : minutes;
-        if (minutes < 0) clearInterval(interval);
-        seconds = (seconds < 0) ? 59 : seconds;
-        seconds = (seconds < 10) ? '0' + seconds : seconds;
-        zkHeartCount.find('.countzero').html(minutes + ':' + seconds);
-        timer2 = minutes + ':' + seconds;
-        if(timer2val < 1){
-          zkHeart++;
-          storage.setItem('zkheart', zkHeart);
-          qtHeart.children().text(zkHeart);
-          zkHeartCount.children('.count').text(zkHeart);
-          clearInterval(interval);
-          if(zkHeart > 3){
-            zkHeartCount.children('.wrap-countzero').hide();
-          }
-        }
-        timer2val--;
-      }, 1000);
-    }
+  qtHeart.children().text(zkHeart);
+  zkHeartShow.text(zkHeart);
+
+  if(zkHeart < 3){
+    time_countdown(bgheartCountdown, timecd_heart, function(){
+      bgheartBtn.addClass('animated infinite pulse');
+      bgheartTxt.show();
+    });
+  }else{
+    bgheartCountdown.hide();
   }
+
+  bgheartBtn.click(function(){
+    var heart_current = parseInt(storage.getItem('zkheart'));
+    bgheartBtn.removeClass('animated infinite pulse');
+    bgheartTxt.hide();
+    if(heart_current < 3){
+      var heart_new = heart_current + 1;
+      storage.setItem('zkheart', heart_new);
+      qtHeart.children().text(heart_new);
+      zkHeartShow.text(heart_new);
+      if(heart_new < 3){
+        bgheartBtn.removeClass('disable');
+        time_countdown(bgheartCountdown, timecd_heart, function(){
+          bgheartBtn.addClass('animated infinite pulse');
+          bgheartTxt.show();
+        });
+      }
+    }else{
+      bgheartBtn.addClass('disable');
+    }
+  });
 
   /* Show High Score */
   var currentScore = storage.getItem("totalScore");
@@ -123,6 +124,7 @@ $('document').ready(function(){
   var r = new randomGenerator(0, randomMax);
   var progDelay;
 
+  var dialogConfirm = $("#dialog-confirm");
   btnAnswer.click(function() {
     var answerSelect = $(this).children().attr('data-answer');
     clearTimeout(progDelay);
@@ -135,42 +137,35 @@ $('document').ready(function(){
         progressTime(totalTime, totalTime, progessBar);
       },gameSuccess,1000);
     }else{
+      var zkHeart = parseInt(storage.getItem('zkheart'));
       if(zkHeart > 0){
-        $("#dialog-confirm").dialog({
-          show: {effect: 'fade', duration: 250},
-          hide: {effect: 'fade', duration: 150},
-          dialogClass: "zkdialogcontinue",
-          open: function() {
-            $(this).html('<p>Đang có '+ zkHeart +' <img src="shared/img/common/heart.png" alt="">, tiếp tục nào!!</p>');
-          },
-          buttons: {
-            "Tiếp tục": function () {
-              $(this).dialog('close');
-              soundRun('true_click');
-              effectPages(function(){
-                insertQuestion(quesStack,r);
-                getStar();
-                progressTime(totalTime, totalTime, progessBar);
-              },gameSuccess,1000);
-              zkHeart--;
-              qtHeart.children().text(zkHeart);
-            },
-            "Dừng lại": function () {
-              $(this).dialog('close');
-              soundRun('false_click');
-              effectPages(function(){
-                redirectPages('#restart', 'none');
-                getHighscore();
-                getNotify(txtWrong);
-                getRank();
-              },gameFailed,2000);
-              if(zkHeart <= 0){
-                storage.setItem('zkheart', 0);
-              }else{
-                storage.setItem('zkheart', zkHeart);
-              }
+        popup_question(dialogConfirm, zkHeart, function(){
+          soundRun('true_click');
+          effectPages(function(){
+            insertQuestion(quesStack,r);
+            getStar();
+            progressTime(totalTime, totalTime, progessBar);
+          },gameSuccess,1000);
+          zkHeart--;
+          storage.setItem('zkheart', zkHeart);
+          qtHeart.children().text(zkHeart);
+          if(zkHeart < 3){
+            zkHeartShow.text(zkHeart);
+            if(bgheartBtn.hasClass('animated') || bgheartCountdown.hasClass('running')){}else{
+              time_countdown(bgheartCountdown, timecd_heart, function(){
+                bgheartBtn.addClass('animated infinite pulse');
+                bgheartTxt.show();
+              });
             }
           }
+        }, function(){
+          soundRun('false_click');
+          effectPages(function(){
+            redirectPages('#restart', 'none');
+            getHighscore();
+            getNotify(txtWrong);
+            getRank();
+          },gameFailed,2000);
         });
       }else{
         soundRun('false_click');
@@ -180,52 +175,40 @@ $('document').ready(function(){
           getNotify(txtWrong);
           getRank();
         },gameFailed,2000);
-        if(zkHeart <= 0){
-          storage.setItem('zkheart', 0);
-        }else{
-          storage.setItem('zkheart', zkHeart);
-        }
       }
     }
   });
 
   function getTimeup(){
+    var zkHeart = parseInt(storage.getItem('zkheart'));
     if(zkHeart > 0){
-      $("#dialog-confirm").dialog({
-        show: {effect: 'fade', duration: 250},
-        hide: {effect: 'fade', duration: 150},
-        dialogClass: "zkdialogcontinue",
-        open: function() {
-          $(this).html('<p>Đang có '+ zkHeart +' <img src="shared/img/common/heart.png" alt="">, tiếp tục nào!!</p>');
-        },
-        buttons: {
-          "Tiếp tục": function () {
-            $(this).dialog('close');
-            soundRun('true_click');
-            effectPages(function(){
-              insertQuestion(quesStack,r);
-              getStar();
-              progressTime(totalTime, totalTime, progessBar);
-            },gameSuccess,1000);
-            zkHeart--;
-            qtHeart.children().text(zkHeart);
-          },
-          "Dừng lại": function () {
-            $(this).dialog('close');
-            soundRun('timeup_click');
-            effectPages(function(){
-              getHighscore('timeup');
-              getNotify(txtTimeup);
-              getRank();
-              redirectPages('#restart', 'none');
-            },gameTimeup,2000);
-            if(zkHeart <= 0){
-              storage.setItem('zkheart', 0);
-            }else{
-              storage.setItem('zkheart', zkHeart);
-            }
+      popup_question(dialogConfirm, zkHeart, function(){
+        soundRun('true_click');
+        effectPages(function(){
+          insertQuestion(quesStack,r);
+          getStar();
+          progressTime(totalTime, totalTime, progessBar);
+        },gameSuccess,1000);
+        zkHeart--;
+        storage.setItem('zkheart', zkHeart);
+        qtHeart.children().text(zkHeart);
+        if(zkHeart < 3){
+          zkHeartShow.text(zkHeart);
+          if(bgheartBtn.hasClass('animated') || bgheartCountdown.hasClass('running')){}else{
+            time_countdown(bgheartCountdown, timecd_heart, function(){
+              bgheartBtn.addClass('animated infinite pulse');
+              bgheartTxt.show();
+            });
           }
         }
+      }, function(){
+        soundRun('timeup_click');
+        effectPages(function(){
+          getHighscore('timeup');
+          getNotify(txtTimeup);
+          getRank();
+          redirectPages('#restart', 'none');
+        },gameTimeup,2000);
       });
     }else{
       soundRun('timeup_click');
@@ -235,11 +218,6 @@ $('document').ready(function(){
         getRank();
         redirectPages('#restart', 'none');
       },gameTimeup,2000);
-      if(zkHeart <= 0){
-        storage.setItem('zkheart', 0);
-      }else{
-        storage.setItem('zkheart', zkHeart);
-      }
     }
   }
 
@@ -466,6 +444,47 @@ $('document').ready(function(){
     this.low = low;
     this.high = high;
     this.reset();
+  }
+
+  function time_countdown(selector, time_str, output){
+    selector.addClass('running').text(time_str).show();
+    var interval = setInterval(function() {
+      var timer = time_str.split(':');
+      var minutes = parseInt(timer[0], 10);
+      var seconds = parseInt(timer[1], 10);
+      --seconds;
+      minutes = (seconds < 0) ? --minutes : minutes;
+      if (minutes < 0){
+        clearInterval(interval);
+        selector.removeClass('running').hide();
+        output();
+      }
+      seconds = (seconds < 0) ? 59 : seconds;
+      seconds = (seconds < 10) ? '0' + seconds : seconds;
+      selector.text(minutes + ':' + seconds);
+      time_str = minutes + ':' + seconds;
+    }, 1000);
+  }
+
+  function popup_question(selector, heart_v, cont_f, stop_f){
+    selector.dialog({
+      show: {effect: 'fade', duration: 250},
+      hide: {effect: 'fade', duration: 150},
+      dialogClass: "zkdialogcontinue",
+      open: function() {
+        $(this).html('<p>Đang có '+ heart_v +' <img src="shared/img/common/heart.png" alt="">, tiếp tục nào!!</p>');
+      },
+      buttons: {
+        "Tiếp tục": function () {
+          $(this).dialog('close');
+          cont_f();
+        },
+        "Dừng lại": function () {
+          $(this).dialog('close');
+          stop_f();
+        }
+      }
+    });
   }
 
   /* Main click */
