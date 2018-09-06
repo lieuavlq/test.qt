@@ -63,6 +63,7 @@ $('document').ready(function(){
         frm_zkphone.val(frm_zkphone_val.val());
       }
       idZkbxhFm.submit();
+      $.mobile.changePage('#firstpage');
     }else{
       alert('Vui lòng nhập tên!');
     }
@@ -83,7 +84,9 @@ $('document').ready(function(){
 
     if(val_zkname !== null){
       frm_zkname.val(val_zkname);
-      frm_zkname_val.prop('disabled', true).val(val_zkname);
+      frm_zkname_val.val(val_zkname);
+      frm_zkname_val.prop('disabled', true).parent('.ui-input-text').addClass('ui-state-disabled');
+      idZkbxhFm.attr('target', '_blank');
     }
 
     if(val_zkphone !== null){
@@ -95,6 +98,7 @@ $('document').ready(function(){
     frm_zkrank.val(val_zkrank);
     if(val_zknumber === null){
       storage.setItem('zknumber_fm_str', val_zknumber_txt);
+      frm_zknumber.val(val_zknumber_txt);
       frm_zknumber_val.hide();
     }else{
       frm_zknumber.val(val_zknumber);
