@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="shared/css/animate.css">
   <link rel="stylesheet" href="shared/css/main.css">
   <script type="text/javascript" src="shared/js/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="shared/js/jquery.validate.min.js"></script>
   <script type="text/javascript" src="shared/js/jquery.mobile-1.4.5.min.js"></script>
   <script type="text/javascript" src="shared/js/jquery.animateNumber.min.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
@@ -34,7 +35,7 @@
           <li>Trả lời nhanh điểm cao</li>
           <li>x2 điểm cho câu hỏi có Ngôi Sao</li>
           <li>Dùng <img src="shared/img/common/heart.png" alt=""> để tiếp tục chơi</li>
-          <li>Tích tối đa 3 trái tim (5 phút tặng 1)</li>
+          <li>Tích tối đa 3 trái tim (1 phút tặng 1)</li>
           <li>Gửi điểm vào BXH khi có điểm cao mới</li>
         </ul>
         <h3 class="zkmtb0">3. Xếp hạng</h3>
@@ -101,7 +102,7 @@
         <div class="zktitle qtnotify"><span>#</span></div>
         <div class="zkpanel zkmtb0">
           <div class="qtnewscore">Ván vừa rồi<br><span class="zkpanel-span">0</span> điểm</div>
-          <div class="qthighscorestage">Điểm cao mới<br><span class="zkpanel-span">0</span> điểm</div>
+          <div class="qthighscorestage">Điểm cao mới<br><span class="zkpanel-span">0</span> điểm <a href="#bxh-page" class="btn-send-point">Gửi điểm -></a></div>
           <p class="zkimg02"><img src="#" alt=""><br><span>#</span></p>
           <div class="zkcol zkfs-small zkmt10">
             <div class="qtrank">Hạng: <span>chưa có</span> | </div>
@@ -109,6 +110,52 @@
           </div>
         </div>
         <div class="btn-restart zkbtn"><span>Chơi Lại Nào!</span></div>
+      </div></div></div></div>
+      <div class="zkpanel-free01">
+        <div class="zkpanel-free02">
+          <div class="zkbtn-circle">
+            <a href="#firstpage"><span class="ico">&nbsp;</span></a><a href="#rank"><span class="ico">&nbsp;</span></a><a href="#info"><span class="ico">&nbsp;</span></a><div class="bgheart-btn"><span class="bgheart-countdown">#</span><span class="bgheart-txt">Nhận tim</span><span class="bgheart-show">#</span><a href="#bgheart"><span class="ico">&nbsp;</span></a></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /content -->
+  </div><!-- /page main -->
+
+  <!-- Start of BXH: #bxh-page -->
+  <div data-role="page" id="bxh-page">
+    <div role="main" class="ui-content">
+      <div class="zkbrd01"><div class="zkbrd02"><div class="zkbrd03"><div class="zkbrd04">
+        <div class="zktitle"><span>Thông Tin Gửi Điểm</span></div>
+        <p class="zkmt0" id="zknumber_fm_val">Biệt hiệu: <span>#</span></p>
+        <div class="zkpanel">
+          <div class="zkbxh_fm">
+            <form action="http://wp0906.localhost:1000/bxhlqm/" id="zkbxh_fm">
+              <label for="zkname_fm_val">
+                <input type="text" id="zkname_fm_val" placeholder="Nhập tên vào..." required>
+                <span>*Tên chỉ nhập lần đầu (bắt buộc)</span>
+              </label>
+              <label for="zkphone_fm_val">
+                <input type="text" id="zkphone_fm_val" placeholder="Nhập số điện thoại vào...">
+                <span>*Dùng để liên lạc khi có quà tặng</span>
+              </label>
+              <label for="zkpoint_fm_val">
+                <input type="text" id="zkpoint_fm_val" disabled="disable">
+                <span>*Điểm gửi đi</span>
+              </label>
+              <label for="zkrank_fm_val" class="last">
+                <input type="text" id="zkrank_fm_val" disabled="disable">
+                <span>*Hạng hiện tại của bạn</span>
+              </label>
+              <input type="hidden" id="zkname_fm" name="zkname_fm">
+              <input type="hidden" id="zkphone_fm" name="zkphone_fm">
+              <input type="hidden" id="zkpoint_fm" name="zkpoint_fm">
+              <input type="hidden" id="zkrank_fm" name="zkrank_fm">
+              <input type="hidden" id="zknumber_fm" name="zknumber_fm">
+              <input type="hidden" id="zkdate_fm" name="zkdate_fm">
+            </form>
+          </div>
+        </div>
+        <div class="btn-bxh-page zkbtn"><span>Gửi đi nào!!</span></div>
       </div></div></div></div>
       <div class="zkpanel-free01">
         <div class="zkpanel-free02">

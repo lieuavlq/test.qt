@@ -30,17 +30,90 @@ $('document').ready(function(){
   var qtHeart = $('.qtheart');
 
   //reset score
-  // storage.setItem("totalScore", 1);
+  storage.setItem("totalScore", 1);
   // storage.setItem('firstscreen', '');
   // storage.setItem('zkheart', 1);
 
   /* Show Rank */
   getRank();
 
+  /* Form submit */
+  var btnbBxhPage = $('.btn-bxh-page span');
+  var idZkbxhFm = $('#zkbxh_fm');
+  var btnSendPoint = $('.btn-send-point');
+  var frm_zkname = $('#zkname_fm');
+  var frm_zkname_val = $('#zkname_fm_val');
+  var frm_zkphone = $('#zkphone_fm');
+  var frm_zkphone_val = $('#zkphone_fm_val');
+  var frm_zkpoint = $('#zkpoint_fm, #zkpoint_fm_val');
+  var frm_zkrank = $('#zkrank_fm, #zkrank_fm_val');
+  var frm_zknumber = $('#zknumber_fm');
+  var frm_zknumber_val = $('#zknumber_fm_val');
+  var frm_zkdate = $('#zkdate_fm');
+
+  btnbBxhPage.click(function() {
+    if(idZkbxhFm.valid()){
+      if(frm_zkname_val.val() !== null){
+        storage.setItem('zkname_fm_str', frm_zkname_val.val());
+        frm_zkname.val(frm_zkname_val.val());
+        frm_zkname_val.prop('disabled', true);
+      }
+      if(frm_zkphone_val.val() !== null){
+        storage.setItem('zkphone_fm_str', frm_zkphone_val.val());
+        frm_zkphone.val(frm_zkphone_val.val());
+      }
+      idZkbxhFm.submit();
+    }else{
+      alert('Vui lòng nhập tên!');
+    }
+  });
+
+  frm_zkname_val.focus(function(){
+    idZkbxhFm.attr('target', '_blank');
+  });
+
+  btnSendPoint.click(function() {
+    var val_zkname = storage.getItem('zkname_fm_str');
+    var val_zkphone = storage.getItem('zkphone_fm_str');
+    var val_zkpoint = storage.getItem('totalScore');
+    var val_zkrank = $('#restart .qtrank span').text();
+    var val_zkdate_time = new Date();
+    var val_zknumber_txt = addZ(val_zkdate_time.getSeconds()) + addZ(val_zkdate_time.getMinutes());
+    var val_zknumber = storage.getItem('zknumber_fm_str');
+
+    if(val_zkname !== null){
+      frm_zkname.val(val_zkname);
+      frm_zkname_val.prop('disabled', true).val(val_zkname);
+    }
+
+    if(val_zkphone !== null){
+      frm_zkphone.val(val_zkphone);
+      frm_zkphone_val.val(val_zkphone);
+    }
+
+    frm_zkpoint.val(val_zkpoint);
+    frm_zkrank.val(val_zkrank);
+    if(val_zknumber === null){
+      storage.setItem('zknumber_fm_str', val_zknumber_txt);
+      frm_zknumber_val.hide();
+    }else{
+      frm_zknumber.val(val_zknumber);
+      frm_zknumber_val.show().children().text(val_zknumber);
+    }
+    frm_zkdate.val(val_zkdate_time.getFullYear() + '-' + addZ(val_zkdate_time.getMonth()+1) + '-' + addZ(val_zkdate_time.getDate()) + ' ' + addZ(val_zkdate_time.getHours()) + ':' + addZ(val_zkdate_time.getMinutes()) + ':' + addZ(val_zkdate_time.getSeconds()));
+
+  });
+
+  function addZ(n) {
+    return (n < 10 ? '0' : '') + n;
+  }
+
+
+
   /* First Screen */
   var valFirstScreen = storage.getItem('firstscreen');
   var idFirstScreen = $('#first-screen');
-  var btnFirstScreen = $('.zkbtnfirstscreen');
+  var btnFirstScreen = $('.zkbtnfirstscreen span');
   if(valFirstScreen === null || valFirstScreen === ''){
     idFirstScreen.show();
   }
@@ -53,7 +126,7 @@ $('document').ready(function(){
   var bgheartCountdown = $('.bgheart-countdown');
   var bgheartBtn = $('.bgheart-btn');
   var bgheartTxt = $('.bgheart-txt');
-  var timecd_heart = '0:30';
+  var timecd_heart = '0:60';
 
   btnFirstScreen.click(function(){
     idFirstScreen.hide();
@@ -73,6 +146,7 @@ $('document').ready(function(){
     });
   }else{
     bgheartCountdown.hide();
+    bgheartBtn.addClass('disable');
   }
 
   bgheartBtn.click(function(){
@@ -90,6 +164,8 @@ $('document').ready(function(){
           bgheartBtn.addClass('animated infinite pulse');
           bgheartTxt.show();
         });
+      }else{
+        bgheartBtn.addClass('disable');
       }
     }else{
       bgheartBtn.addClass('disable');
@@ -221,7 +297,7 @@ $('document').ready(function(){
     }
   }
 
-  $('.btn-start').click(function() {
+  $('.btn-start span').click(function() {
     effectPages(function(){
       resetScore();
       insertQuestion(quesStack,r);
@@ -230,7 +306,7 @@ $('document').ready(function(){
     },gameStart,2000);
   });
 
-  $('.btn-restart').click(function() {
+  $('.btn-restart span').click(function() {
     effectPages(function(){
       resetScore();
       insertQuestion(quesStack,r);
@@ -349,7 +425,7 @@ $('document').ready(function(){
     if(pointRound > oldHighscore){
       storage.setItem("totalScore", pointRound);
       qthighscore.children().text(storage.getItem("totalScore"));
-      qthighscorestage.show().children().text(qtcurrentscore);
+      qthighscorestage.show().children('.zkpanel-span').text(qtcurrentscore);
       qtnewscore.hide();
       zkimg02.show().children('img').attr('src', 'shared/img/common/zuka02.png');
       zkimg02.children('span').html('Dze!! Có tiến bộ rùi<br>Cố lên nửa nào!!');
@@ -448,6 +524,7 @@ $('document').ready(function(){
 
   function time_countdown(selector, time_str, output){
     selector.addClass('running').text(time_str).show();
+    selector.parent().addClass('disable');
     var interval = setInterval(function() {
       var timer = time_str.split(':');
       var minutes = parseInt(timer[0], 10);
@@ -457,6 +534,7 @@ $('document').ready(function(){
       if (minutes < 0){
         clearInterval(interval);
         selector.removeClass('running').hide();
+        selector.parent().removeClass('disable');
         output();
       }
       seconds = (seconds < 0) ? 59 : seconds;
