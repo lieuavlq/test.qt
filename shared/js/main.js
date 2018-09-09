@@ -29,13 +29,37 @@ $('document').ready(function(){
   var randomMax = quesStack.length - 1; //maximum show question
   var qtHeart = $('.qtheart');
 
-  //reset score
+  //reset all
   storage.setItem("totalScore", 1);
   // storage.setItem('firstscreen', '');
   // storage.setItem('zkheart', 1);
 
   /* Show Rank */
   getRank();
+
+  /* Get Ranking Json */
+  function getRankingAjax(handleData){
+    $.ajax({
+      url: "http://lvgames.net/bxh/bxhlqmjson/",
+      type: 'GET',
+      success: function (result) {
+        data = $.parseJSON(result);
+        handleData(data);
+      }
+    });
+  }
+
+  var btnRanking = $('a[href*="rank"]');
+  var zkrankingBoard = $('#zkranking-board');
+  btnRanking.click(function(){
+    zkrankingBoard.append('<table><tr><th>Xếp Hạng</th><th>Tên</th><th>Số Điểm</th><th>Danh Hiệu</th></tr></table>');
+    getRankingAjax(function(output){
+      for(var i=0; i<output.length; i++){
+        var runName = output[i].name;
+        zkrankingBoard.children('table').append('<tr><td>'+ output[i].no +'</td><td><span class="bxh_tbl_name">'+ output[i].title +'</span><i>BH: '+ runName.substr(-4) +'</i></td><td>'+ output[i].point +'</td><td>'+ output[i].rank +'</td></tr>');
+      }
+    });
+  });
 
   /* Form submit */
   var btnbBxhPage = $('.btn-bxh-page span');
@@ -50,6 +74,14 @@ $('document').ready(function(){
   var frm_zknumber = $('#zknumber_fm');
   var frm_zknumber_val = $('#zknumber_fm_val');
   var frm_zkdate = $('#zkdate_fm');
+  var check_zkname = storage.getItem('zkname_fm_str');
+  var check_zknumber = storage.getItem('zknumber_fm_str');
+
+  if(check_zkname !== null && check_zknumber !== null){
+    $('.zkname-main').show();
+    $('.zkname-main-user').text(check_zkname);
+    $('.zkname-main-bh').children().text(check_zknumber);
+  }
 
   btnbBxhPage.click(function() {
     if(idZkbxhFm.valid()){
@@ -111,8 +143,6 @@ $('document').ready(function(){
   function addZ(n) {
     return (n < 10 ? '0' : '') + n;
   }
-
-
 
   /* First Screen */
   var valFirstScreen = storage.getItem('firstscreen');

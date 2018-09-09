@@ -450,6 +450,11 @@ iframe {
   box-shadow: 0 2px 0 #ceae85;
   position: relative;
 }
+.zkbtn a {
+  text-decoration: none;
+  color: #005802 !important;
+  text-shadow: 1px 1px 0 #dbff5f !important;
+}
 .zkpanel { border-radius: 10px; background: #eabd7c; margin: 15px 0; text-align: center; color: #854112; font-style: italic; line-height: 28px; padding: 8px 0; }
 .zkpanel .zkpanel-span { font-weight: bold; font-size: 110%; }
 .zkhr { border-bottom: 2px dashed #c58a5e; margin: 10px 0; }
@@ -952,4 +957,99 @@ display: block;
 }
 .zkbxh_fm label.error {
   display: none !important;
+}
+.zkname-main {
+  display: none;
+}
+.zkname-main-user {
+  font-weight: bold;
+  font-size: 110%;
+}
+.zkname-main-bh {
+  font-size: 80%;
+}
+.bxh_tbl {
+background: #ffd7a3;
+max-width: 600px;
+margin: 10px auto;
+box-sizing: border-box;
+border-radius: 5px;
+}
+.bxh_tbl table {
+width: 100%;
+border-collapse: collapse;
+text-align: center;
+}
+.bxh_tbl th,
+.bxh_tbl td {
+border: 1px solid #000;
+padding: 10px 12px;
+color: #854112;
+line-height: 18px;
+}
+.bxh_tbl th:first-child,
+.bxh_tbl td:first-child {
+width: 10%;
+}
+.bxh_tbl th {
+color: #333;
+}
+.bxh_tbl tr:first-child + tr {
+background: #ff0000;
+}
+.bxh_tbl tr:first-child + tr td {
+color: #fff;
+}
+.bxh_tbl tr:first-child + tr + tr {
+background: #ff9900;
+}
+.bxh_tbl tr:first-child + tr + tr + tr {
+background: #ffcc00;
+}
+.bxh_tbl_name {
+display: block;
+width: 80%;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+text-align: left;
+}
+.bxh_tbl_name + i {
+display: block;
+font-style: normal;
+font-size: 12px;
+text-align: left;
+line-height: 14px;
+}
+
+@media all and (max-width: 480px){
+.bxh_tbl {
+border-width: 3px;
+}
+.bxh_tbl table {
+font-size: 100%;
+}
+.bxh_tbl th,
+.bxh_tbl td {
+padding: 10px 5px;
+line-height: 14px;
+}
+.bxh_tbl th:first-child,
+.bxh_tbl td:first-child {
+width: 6%;
+}
+.bxh_tbl_name {
+width: 95%;
+}
+.bxh_tbl_name + i {
+font-size: 80%;
+line-height: normal;
+opacity: 0.9;
+}
+}
+
+@media all and (max-width: 360px){
+.bxh_tbl th, .bxh_tbl td {
+padding: 8px 3px;
+}
 }
