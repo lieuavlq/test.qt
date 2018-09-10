@@ -28,6 +28,7 @@ $('document').ready(function(){
   var totalTime = 3; //time for progress bar
   var randomMax = quesStack.length - 1; //maximum show question
   var qtHeart = $('.qtheart');
+  var zkapp_name = 'Câu Đố Liên Quân';
 
   //reset all
   storage.setItem("totalScore", 1);
@@ -37,14 +38,29 @@ $('document').ready(function(){
   /* Show Rank */
   getRank();
 
+  /* Shared link */
+  var zksharedLink = $('.zkshared_link');
+  var check_name_str = storage.getItem('zkname_fm_str');
+  if(check_name_str !== null){
+    zksharedLink.show();
+  }
+  zksharedLink.children('a').click(function() {
+    var zksharedLink_name = $('.zkname-main-user').text();
+    var zksharedLink_rank = $('.zkshared_link_name span').text();
+    var zksharedLink_point = $('.qthighscore span').text();
+    var zksharedLink_img = $('.qtrankimg img').attr('src');
+    var zksharedLink_img_split1 = zksharedLink_img.split('/');
+    var zksharedLink_img_split2 = zksharedLink_img_split1[3].split('.');
+    window.open('http://lvgames.net/shared/lqm/?lqmtitle=Chúc mừng '+ zksharedLink_name +' đạt '+ zksharedLink_rank +'&lqmimg=http://lvgames.net/shared/lqm/'+ zksharedLink_img_split2[0] +'.jpg&lqmdesc=Bạn được '+ zksharedLink_point +' điểm tương đương bậc '+ zksharedLink_rank +' tại ứng dụng ' + zkapp_name, 'Chia sẻ điểm hạng tới FB', 'menubar=no,toolbar=no,resizable=no,width=100,height=100');
+  });
+
   /* Get Ranking Json */
-  function getRankingAjax(handleData){
+  function getRankingAjax(){
     $.ajax({
       url: "http://lvgames.net/bxh/bxhlqmjson/",
       type: 'GET',
       success: function (result) {
-        data = $.parseJSON(result);
-        handleData(data);
+        storage.setItem('ranking_current', result);
       }
     });
   }
@@ -52,13 +68,20 @@ $('document').ready(function(){
   var btnRanking = $('a[href*="rank"]');
   var zkrankingBoard = $('#zkranking-board');
   btnRanking.click(function(){
-    zkrankingBoard.append('<table><tr><th>Xếp Hạng</th><th>Tên</th><th>Số Điểm</th><th>Danh Hiệu</th></tr></table>');
-    getRankingAjax(function(output){
-      for(var i=0; i<output.length; i++){
-        var runName = output[i].name;
-        zkrankingBoard.children('table').append('<tr><td>'+ output[i].no +'</td><td><span class="bxh_tbl_name">'+ output[i].title +'</span><i>BH: '+ runName.substr(-4) +'</i></td><td>'+ output[i].point +'</td><td>'+ output[i].rank +'</td></tr>');
+    getRankingAjax();
+    zkrankingBoard.append('<p>Đợi xíu...</p>');
+    var getranking_time = setTimeout(function(){
+      zkrankingBoard.children().remove();
+      var ranking_str = storage.getItem('ranking_current');
+      if(ranking_str !== null){
+        zkrankingBoard.append('<table><tr><th>Xếp Hạng</th><th>Tên</th><th>Số Điểm</th><th>Danh Hiệu</th></tr></table>');
+        output = $.parseJSON(ranking_str);
+        for(var i=0; i<output.length; i++){
+          var runName = output[i].name;
+          zkrankingBoard.children('table').append('<tr><td>'+ output[i].no +'</td><td><span class="bxh_tbl_name">'+ output[i].title +'</span><i>BH: '+ runName.substr(-4) +'</i></td><td>'+ output[i].point +'</td><td>'+ output[i].rank +'</td></tr>');
+        }
       }
-    });
+    },3000);
   });
 
   /* Form submit */
@@ -76,11 +99,14 @@ $('document').ready(function(){
   var frm_zkdate = $('#zkdate_fm');
   var check_zkname = storage.getItem('zkname_fm_str');
   var check_zknumber = storage.getItem('zknumber_fm_str');
+  var zknameMain = $('.zkname-main');
+  var zknameMainUser = $('.zkname-main-user');
+  var zknameMainBh = $('.zkname-main-bh');
 
   if(check_zkname !== null && check_zknumber !== null){
-    $('.zkname-main').show();
-    $('.zkname-main-user').text(check_zkname);
-    $('.zkname-main-bh').children().text(check_zknumber);
+    zknameMain.show();
+    zknameMainUser.text(check_zkname);
+    zknameMainBh.children().text(check_zknumber);
   }
 
   btnbBxhPage.click(function() {
@@ -95,6 +121,10 @@ $('document').ready(function(){
         frm_zkphone.val(frm_zkphone_val.val());
       }
       idZkbxhFm.submit();
+      zksharedLink.show();
+      zknameMain.show();
+      zknameMainUser.text(storage.getItem('zkname_fm_str'));
+      zknameMainBh.children().text(storage.getItem('zknumber_fm_str'));
       $.mobile.changePage('#firstpage');
     }else{
       alert('Vui lòng nhập tên!');

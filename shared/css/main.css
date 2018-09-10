@@ -13,7 +13,9 @@ body,
 body {
   font-size: 16px;
   line-height: 24px;
-  background: #353535;
+  background: url(../img/common/bgmain.png) no-repeat center bottom;
+  background-color: #353535 !important;
+  background-attachment: fixed;
 }
 img {
   max-width: 100%;
@@ -338,7 +340,8 @@ iframe {
 .qthighscorestage {
   display: none;
 }
-.qthighscorestage a {
+.qthighscorestage a,
+.zknormal_link {
   text-decoration: none;
 }
 .qtrankimg img,
@@ -421,7 +424,7 @@ iframe {
   background: #f00;
 }
 /* ZK Style */
-[data-role="page"] { background: #353535; }
+[data-role="page"] { background-color: transparent; }
 .zkbrd01 { border: 1px solid #a15217; border-radius: 14px; margin: 20px 0; }
 .zkbrd02 { border: 3px solid #fc7a02; border-radius: 13px; }
 .zkbrd03{ border: 2px solid #a15217; padding: 3px; border-radius: 10px; background: #ffd7a3; position: relative; }
@@ -958,7 +961,8 @@ display: block;
 .zkbxh_fm label.error {
   display: none !important;
 }
-.zkname-main {
+.zkname-main,
+.zkshared_link {
   display: none;
 }
 .zkname-main-user {
