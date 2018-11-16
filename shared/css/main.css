@@ -665,7 +665,7 @@ iframe {
     height: 330px;
   }
   .zkimg02 img {
-    max-width: 210px;
+    max-width: 184px;
   }
 }
 
@@ -690,7 +690,7 @@ iframe {
     height: 210px;
   }
   .zkimg02 img {
-    max-width: 200px;
+    max-width: 170px;
   }
   .zkimg02 {
     font-size: 15px;
@@ -727,9 +727,6 @@ text-align: center;
 display: none;
 font-size: 18px;
 line-height: 24px;
-}
-.zkimg02 img {
-max-width: 230px;
 }
 .zkmain-img {
 height: 40px;
